@@ -4,12 +4,12 @@ const { ObjectId } = Schema.Types;
 
 // Booking document interface
 export interface IBooking {
-  bikeId: Schema.Types.ObjectId;
+  bikeId: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId;
   startTime: Date;
   endTime: Date;
   status: 'confirmed' | 'cancelled';
-  duration: number; // virtual (in milliseconds)
+  duration?: number; // virtual (in milliseconds)
 }
 
 // Booking Schema
@@ -54,7 +54,6 @@ bookingSchema.index(
   { bikeId: 1, startTime: 1, status: 1 },
   { name: 'bike_time_status_idx' }
 );
-
 
 // Virtual: booking duration (milliseconds)
 bookingSchema.virtual('duration').get(function (this: IBooking) {
