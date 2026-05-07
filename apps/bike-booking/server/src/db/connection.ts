@@ -11,11 +11,16 @@ const connectDB = async (): Promise<void> => {
 
   try {
     await mongoose.connect(uri);
-    console.log("Connected to database successfully");
+    console.log("Connected to MongoDB successfully");
   } catch (error) {
-    console.error("Error connecting to database:", error);
-    throw new Error("Failed to connect to database");
+    console.error("Error connecting to MongoDB:", error);
+    throw error;
   }
 };
+
+export async function disconnectDB(): Promise<void> {
+  await mongoose.disconnect();
+  console.log("Disconnected from MongoDB successfully");
+}
 
 export default connectDB;
