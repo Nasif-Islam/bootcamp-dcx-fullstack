@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const connectDB = async (): Promise<void> => {
+export const connectDB = async (): Promise<void> => {
   const uri = process.env.MONGODB_URI;
 
   if (!uri) {
@@ -18,9 +18,12 @@ const connectDB = async (): Promise<void> => {
   }
 };
 
-export async function disconnectDB(): Promise<void> {
-  await mongoose.disconnect();
-  console.log("Disconnected from MongoDB successfully");
-}
-
-export default connectDB;
+export const disconnectDB = async (): Promise<void> => {
+  try {
+    await mongoose.disconnect();
+    console.log("Disconnected from MongoDB successfully");
+  } catch (error) {
+    console.error("Error disconnecting from MongoDB:", error);
+    throw error;
+  }
+};
