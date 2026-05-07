@@ -1,22 +1,41 @@
 import app from "./app";
-import * as dotenv from "dotenv";
-import { connectDB, disconnectDB } from "./db/connection";
-import path from "path";
+import dotenv from "dotenv";
+import { connectToDB, disconnectFromDB } from "./db/connection";
 
-dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
+console.log("CWD:", process.cwd());
 
-const PORT = Number(process.env.PORT) || 3000;
+dotenv.config();
+
+const PORT = Number(process.env.PORT) || 5001;
 
 async function startServer(): Promise<void> {
   try {
-    await connectDB();
+    await connectToDB();
 
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
-      console.log("Application started successfully");
     });
+
+    const shutdown = async (signal: string) => {
+      console.log(
+        `\n${signal} received. Shutting down server and database connection...`,
+      );
+
+      server.close(async () => {
+        console.log("Express HTTP server closed");
+        try {
+          await disconnectFromDB();
+        } catch (err) {
+          console.error("Error during database disconnection:", err);
+        }
+        process.exit(0);
+      });
+    };
+
+    process.on("SIGTERM", () => shutdown("SIGTERM"));
+    process.on("SIGINT", () => shutdown("SIGINT"));
   } catch (err) {
-    console.error("Failed to start application:", err);
+    console.error("Failed to start server:", err);
     process.exit(1);
   }
 }
