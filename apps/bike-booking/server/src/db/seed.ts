@@ -1,9 +1,13 @@
-import { Bike } from "../models/Bike";
+import dotenv from "dotenv";
+import { Bike } from "../models/index";
 import { bikes } from "../data/data";
 import { connectToDB, disconnectFromDB } from "./connection";
 
+dotenv.config();
+
 const seedDB = async () => {
   try {
+    console.log("Connecting to MongoDB...");
     await connectToDB();
 
     const deleteResult = await Bike.deleteMany({});
@@ -12,12 +16,18 @@ const seedDB = async () => {
     const inserted = await Bike.insertMany(bikes);
     console.log(`Inserted: ${inserted.length} bikes`);
 
-    process.exit(0);
+    process.exitCode = 0;
   } catch (err) {
     console.error("Error seeding the database:", err);
-    process.exit(1);
+    process.exitCode = 1;
   } finally {
-    await disconnectFromDB();
+    try {
+      await disconnectFromDB();
+      console.log("Database seeding completely successfully");
+    } catch (err) {
+      console.error("Error disconnecting from MongoDB", err);
+      process.exitCode = 1;
+    }
   }
 };
 

@@ -1,4 +1,3 @@
-// src/data.ts
 export const bikes = [
   {
     name: "Peak Explorer",
