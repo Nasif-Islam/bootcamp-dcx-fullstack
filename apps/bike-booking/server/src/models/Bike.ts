@@ -35,7 +35,7 @@ const bikeSchema = new Schema<IBike>(
          type: String,
       }
    },
-   { timestamps: true } // this automatically manages createdAt and updatedAt fields
+   { timestamps: true, versionKey: false }  // this automatically manages createdAt and updatedAt fields
 );
 
 // Index on type field
