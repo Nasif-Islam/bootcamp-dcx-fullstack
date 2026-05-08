@@ -49,6 +49,4 @@ const userSchema = new Schema<IUser>(
   },
 );
 
-userSchema.index({ email: 1 }, { unique: true });
-
 export const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
