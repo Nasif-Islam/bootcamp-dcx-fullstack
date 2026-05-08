@@ -6,14 +6,14 @@ Get the development environment running, understand the project structure, and p
 
 ## Tasks
 
-- [ ] Clone the repository
-- [ ] Install dependencies (`nvm use && npm install`)
-- [ ] Run the bike booking app (`npm run dev:bike`)
-- [ ] Verify client loads at http://localhost:5174
-- [ ] Verify API health check at http://localhost:5001/api/health
-- [ ] Understand the folder structure
-- [ ] Review PRD requirements
-- [ ] Create feature branch for development
+- [x] Clone the repository
+- [x] Install dependencies (`nvm use && npm install`)
+- [x] Run the bike booking app (`npm run dev:bike`)
+- [x] Verify client loads at http://localhost:5174
+- [x] Verify API health check at http://localhost:5001/api/health
+- [x] Understand the folder structure
+- [x] Review PRD requirements
+- [x] Create feature branch for development
 
 ## PRD Overview
 
