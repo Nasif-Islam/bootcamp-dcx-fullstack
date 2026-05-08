@@ -1,17 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { Booking, IBooking } from '../models/Booking';
 
-export type BookingDocument = mongoose.Document<unknown, any, IBooking> & IBooking;
+export type BookingDocument = HydratedDocument<IBooking>;
 
 function ensureObjectId(value: string | mongoose.Types.ObjectId): mongoose.Types.ObjectId {
   if (typeof value === 'string') {
+    // valdiate string before converting to ObjectId
     if (!mongoose.Types.ObjectId.isValid(value)) {
       throw new Error('Invalid ObjectId');
     }
-    return new mongoose.Types.ObjectId(value);
+    return new mongoose.Types.ObjectId(value); // normalize to ObjectId
   }
 
-  return value;
+  return value; // If already objectId, return
 }
 
 export interface AvailabilityResult {
@@ -25,24 +26,30 @@ export async function checkBikeAvailability(
   endTime: Date,
   excludeBookingId?: string,
 ): Promise<AvailabilityResult> {
-  const bikeObjectId = ensureObjectId(bikeId);
+  const bikeObjectId = ensureObjectId(bikeId); // ensure consistent Id type
+  // flexibile Mongo query object (allows dynamic fields like _id_).
   const query: Record<string, unknown> = {
     bikeId: bikeObjectId,
     status: 'confirmed',
-    startTime: { $lt: endTime },
-    endTime: { $gt: startTime },
+    startTime: { $lt: endTime }, // booking starts before end
+    endTime: { $gt: startTime }, // booking ends after start
   };
 
   if (excludeBookingId) {
+    // used if updating an existing booking
     if (!mongoose.Types.ObjectId.isValid(excludeBookingId)) {
       throw new Error('Invalid excludeBookingId');
     }
     query._id = { $ne: new mongoose.Types.ObjectId(excludeBookingId) };
   }
 
-  const conflicts = await Booking.find(query).sort({ startTime: 1 }).exec();
+  const conflicts = await Booking
+    .find(query)
+    .sort({ startTime: 1 }) // earliest conflict first
+    .exec();
+
   return {
-    available: conflicts.length === 0,
+    available: conflicts.length === 0, // available if no overlaps
     conflicts,
   };
 }
@@ -50,8 +57,8 @@ export async function checkBikeAvailability(
 export async function getBikeBookings(
   bikeId: string | mongoose.Types.ObjectId,
 ): Promise<BookingDocument[]> {
-  const bikeObjectId = ensureObjectId(bikeId);
+  const bikeObjectId = ensureObjectId(bikeId); // normalize Id
   return Booking.find({ bikeId: bikeObjectId, status: 'confirmed' })
-    .sort({ startTime: 1 })
+    .sort({ startTime: 1 }) 
     .exec();
 }
