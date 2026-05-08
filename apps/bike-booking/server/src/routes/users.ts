@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { User } from "../models/index";
 
-const router = express.Router();
+const usersRouter = express.Router();
 
 const isValidObjectId = (id: string): boolean => {
   return mongoose.Types.ObjectId.isValid(id);
@@ -10,7 +10,7 @@ const isValidObjectId = (id: string): boolean => {
 
 const normalizeEmail = (email: string): string => email.trim().toLowerCase();
 
-router.post("/register", async (req, res) => {
+usersRouter.post("/register", async (req, res) => {
   try {
     const { email, password, name } = req.body;
 
@@ -48,7 +48,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+usersRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -75,7 +75,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+usersRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   if (!isValidObjectId(id))
@@ -93,4 +93,4 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-export default router;
+export default usersRouter;

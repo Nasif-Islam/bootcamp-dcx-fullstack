@@ -9,7 +9,7 @@ Build the core backend API for bikes, bookings, and user authentication.
 ### 1. Data Models & Types
 
 - [x] Define TypeScript interfaces for Bike, Booking, User
-- [ ] Create in-memory data storage (arrays/Maps)
+- [x] Create in-memory data storage (arrays/Maps)
 - [x] Add sample bike data (6+ bikes with different types)
 
 ### 2. Bikes API (Feature 2.1: View Available Bikes)
@@ -34,7 +34,7 @@ Build the core backend API for bikes, bookings, and user authentication.
 
 ### 4. Users API (Feature 2.6: Simple Registration/Login)
 
-- [ ] POST /api/users/register - Register new user
+- [x] POST /api/users/register - Register new user
   - [x] Validate email and password
   - [x] Store user with hashed password (basic)
   - [x] Return user ID
