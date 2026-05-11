@@ -3,7 +3,7 @@ import { Booking, IBooking } from '../models/Booking';
 
 export type BookingDocument = HydratedDocument<IBooking>;
 
-function ensureObjectId(value: string | mongoose.Types.ObjectId): mongoose.Types.ObjectId {
+export function ensureObjectId(value: string | mongoose.Types.ObjectId): mongoose.Types.ObjectId {
   if (typeof value === 'string') {
     // valdiate string before converting to ObjectId
     if (!mongoose.Types.ObjectId.isValid(value)) {
