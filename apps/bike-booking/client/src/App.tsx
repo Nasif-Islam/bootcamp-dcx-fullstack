@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import BrowseBikes from "./pages/BrowseBikes";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -15,6 +16,7 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
+      <BrowseBikes />
     </>
   );
 }
