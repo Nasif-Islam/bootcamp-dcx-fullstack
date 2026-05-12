@@ -27,6 +27,10 @@
 
 }
 
+* {
+  font-family: var(--font-style);
+}
+
 body {
   margin: 0;
   min-width: 320px;
