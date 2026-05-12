@@ -1,9 +1,58 @@
+import { useState } from "react";
 import "./BikeBook.css";
 
-const today = new Date();
-console.log(today);
+interface BookingFormProps {
+  bike: string;
+  userId: string;
+}
 
-function BikeBooking() {
+function BikeBooking({ bike, userId }: BookingFormProps) {
+  const today = new Date().toISOString().split("T")[0];
+
+  const [startDate, setStartDate] = useState(today);
+  const [startTime, setStartTime] = useState("");
+  const [endDate, setEndDate] = useState(today);
+  const [endTime, setEndTime] = useState("");
+
+  const [isAvailable, setIsAvailable] = useState("");
+  const [error, setError] = useState("");
+
+  async function checkAvailability() {
+    if (!startDate || !startTime || !endDate || !endTime) {
+      return "Please fill in all date/time fields";
+    }
+
+    const startDateTime = `${startDate}T${startTime}:00`;
+    const endDateTime = `${endDate}T${endTime}:00`;
+
+    if (new Date(endDateTime) <= new Date(startDateTime)) {
+      return "End datetime must be after start datetime";
+    }
+
+    if (new Date() > new Date(startDateTime)) {
+      return "Cannot book in the past";
+    }
+  }
+
+  async function submit() {
+    return;
+  }
+
+  function getEstimatedPrice(): number | null {
+    const pricePerHour: number = 15;
+    if (!startDate || !startTime || !endDate || !endTime) return null;
+    const start = new Date(`${startDate}T${startTime}`);
+    const end = new Date(`${endDate}T${endTime}`);
+    const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+    if (hours < 0) return null;
+    // Place holder price
+    return Math.round(hours * pricePerHour);
+  }
+
+  const estimatedPrice = getEstimatedPrice();
+  console.log("Today's DateTime: " + new Date());
+  console.log("Start DateTime: " + new Date(`${startDate}T${startTime}:00`));
+
   return (
     <div className="form-container">
       <div className="form-header">
@@ -17,7 +66,7 @@ function BikeBooking() {
             className="bike-image"
             src="https://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/11/2023/08/Canyon-Torque-Mullet-AL-6-Aug292.jpg"
           ></img>
-          <p className="bike-type">Bike Type</p>
+          <span className="bike-type">Bike Type</span>
           <p className="">Description</p>
           <p className="price-info">Bike Price</p>
         </div>
@@ -29,15 +78,25 @@ function BikeBooking() {
                 type="date"
                 id="start-date"
                 name="start-date"
-                value="2018-07-22"
-                min="2018-01-01"
-                max="2018-12-31"
+                value={startDate}
+                min={today}
+                onChange={(event) => {
+                  setStartDate(event.target.value);
+                }}
               />
             </div>
 
             <div className="form-item">
               <label>Start Time</label>
-              <input type="time" id="start-time" name="start-time" required />
+              <input
+                type="time"
+                id="start-time"
+                name="start-time"
+                onChange={(event) => {
+                  setStartTime(event.target.value);
+                }}
+                required
+              />
             </div>
           </div>
           <div className="form-row">
@@ -47,20 +106,48 @@ function BikeBooking() {
                 type="date"
                 id="end-date"
                 name="end-date"
-                value="2018-07-22"
-                min="2018-01-01"
-                max="2018-12-31"
+                value={endDate}
+                min={today}
+                onChange={(event) => {
+                  setEndDate(event.target.value);
+                }}
               />
             </div>
 
             <div className="form-item">
               <label>End Time</label>
-              <input type="time" id="end-time" name="end-time" required />
+              <input
+                type="time"
+                id="end-time"
+                name="end-time"
+                onChange={(event) => {
+                  setEndTime(event.target.value);
+                }}
+                required
+              />
             </div>
           </div>
-          <div className="form-row">
-            <button className="check-button">Check Availability</button>
-            <button className="submit-button">Confirm Booking</button>
+
+          {estimatedPrice !== null && (
+            <div className="price-estimate">
+              <span>Estimated Total:</span>
+              <span className="price">£{estimatedPrice}</span>
+            </div>
+          )}
+
+          {error && <div className="form-error">{error}</div>}
+
+          <div className="form-buttons">
+            <button
+              className="check-button"
+              onClick={checkAvailability}
+              disabled={!startDate || !startTime || !endDate || !endTime}
+            >
+              Check Availability
+            </button>
+            <button className="submit-button" disabled={true}>
+              Confirm Booking
+            </button>
           </div>
         </div>
       </div>
