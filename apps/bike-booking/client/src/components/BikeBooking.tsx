@@ -1,8 +1,11 @@
 import { useState } from "react";
 import "./BikeBook.css";
+import { getBikeAvailability } from "../api/bikes";
+import { createBooking } from "../api/bookings";
+import type { Booking, Bike } from "../api/types";
 
 interface BookingFormProps {
-  bike: string;
+  bike: Bike;
   userId: string;
 }
 
@@ -32,6 +35,8 @@ function BikeBooking({ bike, userId }: BookingFormProps) {
     if (new Date() > new Date(startDateTime)) {
       return "Cannot book in the past";
     }
+
+    const available = getBikeAvailability(u);
   }
 
   async function submit() {
@@ -56,7 +61,7 @@ function BikeBooking({ bike, userId }: BookingFormProps) {
   return (
     <div className="form-container">
       <div className="form-header">
-        <h2>Bike Name</h2>
+        <h2>{bike.name}</h2>
         <button className="back-button">← Back to bikes</button>
       </div>
 
@@ -66,9 +71,9 @@ function BikeBooking({ bike, userId }: BookingFormProps) {
             className="bike-image"
             src="https://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/11/2023/08/Canyon-Torque-Mullet-AL-6-Aug292.jpg"
           ></img>
-          <span className="bike-type">Bike Type</span>
-          <p className="">Description</p>
-          <p className="price-info">Bike Price</p>
+          <span className="bike-type">{bike.type}</span>
+          <p className="">{bike.description}</p>
+          <p className="price-info">£{bike.pricePerHour}/Hour</p>
         </div>
         <div className="form">
           <div className="form-row">
