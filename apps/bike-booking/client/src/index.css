@@ -13,12 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Bike booking colour variables and typography */
-  --blue: #5d6ee0;
+  --blue: #5d91e0;
   --purple: #674595;
   --dark-lilac: #7f62a1;
-  --mint-green: #cdead4;
+  --mint-green: #ddf0db;
   --dark-green: #517459;
-  --light-grey: #f4f5f9;
+  --light-grey: #f0efef;
+  --grey: #797878;
   --white: #ffffff;
   --black: #000000;
 
