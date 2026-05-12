@@ -8,9 +8,9 @@ Build the React UI and connect it to the backend API. Create a responsive design
 
 ### 1. Types & API Client
 
-- [ ] Create TypeScript types matching backend
-- [ ] Create API client functions (fetch wrappers)
-- [ ] Add error handling for API calls
+- [x] Create TypeScript types matching backend
+- [x] Create API client functions (fetch wrappers)
+- [x] Add error handling for API calls
 
 ### 2. Authentication UI (Feature 2.6)
 
