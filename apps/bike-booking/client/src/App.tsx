@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+// import ApiSmokeTest from "./ApiSmokeTest";
 import BrowseBikes from "./pages/BrowseBikes";
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
+      {/* ignore smoke test component - for dev purposes */}
+      {/* <ApiSmokeTest>  */}
       <BrowseBikes />
     </>
   );

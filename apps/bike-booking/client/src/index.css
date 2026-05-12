@@ -22,9 +22,8 @@
   --white: #ffffff;
   --black: #000000;
 
-    /* Typography */
-    --font-style: "Roboto", sans-serif;
-
+  /* Typography */
+  --font-style: "Roboto", sans-serif;
 }
 
 * {
