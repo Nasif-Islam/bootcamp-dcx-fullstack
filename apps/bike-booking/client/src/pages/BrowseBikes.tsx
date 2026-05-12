@@ -1,7 +1,7 @@
 import React from "react";
 import "./BikeCard";
 import BikeCard from "./BikeCard";
-import "../components/BikeCard.css";
+import "./BikeCard.css";
 
 const BrowseBikes = () => {
   return (
