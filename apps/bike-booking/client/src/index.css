@@ -11,6 +11,24 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Bike booking colour variables and typography */
+  --blue: #5d6ee0;
+  --purple: #674595;
+  --dark-lilac: #7f62a1;
+  --mint-green: #cdead4;
+  --dark-green: #517459;
+  --light-grey: #f4f5f9;
+  --white: #ffffff;
+  --black: #000000;
+
+    /* Typography */
+    --font-style: "Roboto", sans-serif;
+
+}
+
+* {
+  font-family: var(--font-style);
 }
 
 body {
