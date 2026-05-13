@@ -20,6 +20,7 @@
   --dark-green: #517459;
   --light-grey: #f0efef;
   --grey: #797878;
+  --off-white: #f9f9f9;
   --white: #ffffff;
   --black: #000000;
 
@@ -35,6 +36,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--off-white);
+
 }
 
 h1 {
