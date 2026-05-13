@@ -31,6 +31,9 @@ export function BikeBooking({
   const [error, setError] = useState<string | null>(null);
 
   async function checkAvailability() {
+    setIsAvailable(null);
+    setError(null);
+
     if (!startDate || !startTime || !endDate || !endTime) {
       setError("Please fill in all date/time fields.");
       return;
@@ -50,7 +53,6 @@ export function BikeBooking({
     }
 
     setIsLoading(true);
-    setError(null);
     try {
       const available = await getBikeAvailability(
         bike._id,
@@ -58,7 +60,7 @@ export function BikeBooking({
         endDateTime,
       );
       setIsAvailable(available.available);
-      if (available.available) {
+      if (!available.available) {
         setError("Bike is not available for selected time slot.");
       }
     } catch (err) {
