@@ -1,10 +1,25 @@
+import "./SignUpPage.css";
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ApiError, register } from "../api/api";
+
 import type { RegisterInput } from "../api/api";
+import type { SubmitEventHandler } from "react";
 
 type SignUpForm = RegisterInput & { confirmPassword: string };
 type FormErrors = Partial<Record<keyof SignUpForm, string>>;
+
+function getApiErrorMessage(err: ApiError): string {
+  const body = err.body as { error?: string; message?: string } | undefined;
+  return body?.error || body?.message || err.message || "Registration failed";
+}
+
+function isDuplicateEmailError(err: ApiError): boolean {
+  if (err.status !== 400) return false;
+  const msg = getApiErrorMessage(err).toLowerCase();
+  return msg.includes("email already in use");
+}
 
 export default function SignUpPage() {
   const navigate = useNavigate();
@@ -42,7 +57,7 @@ export default function SignUpPage() {
     }
 
     if (!values.confirmPassword) {
-      next.password = "Please confirm your password";
+      next.confirmPassword = "Please confirm your password";
     } else if (values.confirmPassword !== values.password) {
       next.confirmPassword = "Passwords do not match";
     }
@@ -56,7 +71,7 @@ export default function SignUpPage() {
     setErrors((prev) => ({ ...prev, [key]: undefined }));
   }
 
-  async function onSubmit(e: React.FormEvent) {
+  const onSubmit: SubmitEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setServerError(null);
     setSuccessMsg(null);
@@ -81,23 +96,22 @@ export default function SignUpPage() {
       }, 700);
     } catch (err: unknown) {
       if (err instanceof ApiError) {
-        const msg = err.message || "Registration failed";
+        const msg = getApiErrorMessage(err);
 
-        if (
-          err.status === 400 &&
-          msg.toLowerCase().includes("email already in use")
-        ) {
-          setServerError("Duplicate email. Please use another email address");
-        } else {
-          setServerError(msg);
+        if (isDuplicateEmailError(err)) {
+          setErrors((prev) => ({ ...prev, email: msg }));
+          setServerError(null);
+          return;
         }
+
+        setServerError(msg);
       } else {
         setServerError("Something went wrong. Please try again.");
       }
     } finally {
       setSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="auth-page">
@@ -118,11 +132,14 @@ export default function SignUpPage() {
               <label htmlFor="name">Full Name</label>
               <input
                 id="name"
-                className="input"
+                name="name"
+                autoComplete="name"
+                className={`input ${errors.name ? "input-error" : ""}`}
                 value={form.name}
                 onChange={(e) => setField("name", e.target.value)}
                 placeholder="John Doe"
                 disabled={submitting}
+                required
               />
               {errors.name && <p className="field-error">{errors.name}</p>}
             </div>
@@ -131,11 +148,15 @@ export default function SignUpPage() {
               <label htmlFor="email">Email</label>
               <input
                 id="email"
-                className="input"
+                name="email"
+                type="email"
+                autoComplete="email"
+                className={`input ${errors.email ? "input-error" : ""}`}
                 value={form.email}
                 onChange={(e) => setField("email", e.target.value)}
                 placeholder="you@example.com"
                 disabled={submitting}
+                required
               />
               {errors.email && <p className="field-error">{errors.email}</p>}
             </div>
@@ -144,12 +165,15 @@ export default function SignUpPage() {
               <label htmlFor="password">Password</label>
               <input
                 id="password"
-                className="input"
+                name="password"
+                autoComplete="new-password"
+                className={`input ${errors.password ? "input-error" : ""}`}
                 type="password"
                 value={form.password}
                 onChange={(e) => setField("password", e.target.value)}
                 placeholder="Minimum 6 characters"
                 disabled={submitting}
+                required
               />
               {errors.password && (
                 <p className="field-error">{errors.password}</p>
@@ -160,12 +184,15 @@ export default function SignUpPage() {
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
                 id="confirmPassword"
-                className="input"
+                name="confirmPassword"
+                autoComplete="new-password"
+                className={`input ${errors.confirmPassword ? "input-error" : ""}`}
                 type="password"
                 value={form.confirmPassword}
                 onChange={(e) => setField("confirmPassword", e.target.value)}
                 placeholder="Re-enter password"
                 disabled={submitting}
+                required
               />
               {errors.confirmPassword && (
                 <p className="field-error">{errors.confirmPassword}</p>
