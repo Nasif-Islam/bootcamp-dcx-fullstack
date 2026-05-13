@@ -1,4 +1,3 @@
-import React from "react";
 import "./BikeCard.css";
 
 interface BikeCardProps {

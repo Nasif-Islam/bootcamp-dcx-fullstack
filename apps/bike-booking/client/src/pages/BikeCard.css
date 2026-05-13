@@ -1,9 +1,21 @@
+.bike-list-container {
+  padding: 20px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.title {
+  color: var(--black);
+  text-align: start;
+  font-weight: 700;
+}
+
 .bike-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 10px;
   row-gap: 50px;
-  padding: 20px;
+  padding: 20px 0px;
   max-width: 1120px;
   margin: 0 auto;
   justify-content: center;
@@ -15,6 +27,7 @@
   width: 100%;
   max-width: 370px;
   /* border: 3px solid orange; */
+  background-color: var(--white);
   border-radius: 25px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -43,6 +56,8 @@
 .type-name {
   font-size: 0.9em;
   color: var(--grey);
+  background-color: var(--light-grey);
+
 }
 
 .type-container {
@@ -96,6 +111,8 @@
   font-size: 0.9em;
   font-weight: 600;
   color: var(--dark-green);
+  background-color: var(--mint-green);
+
 }
 
 .book-now-btn {

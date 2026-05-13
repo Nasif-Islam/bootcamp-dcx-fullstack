@@ -7,11 +7,7 @@ import bikeRouter from "./routes/bikes";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:5174",
-  }),
-);
+app.use(cors({ origin: "http://localhost:5174" }));
 
 app.use(express.json());
 

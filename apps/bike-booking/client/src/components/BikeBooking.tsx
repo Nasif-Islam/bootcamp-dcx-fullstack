@@ -58,7 +58,7 @@ export function BikeBooking({
         endDateTime,
       );
       setIsAvailable(available.available);
-      if (!isAvailable) {
+      if (available.available) {
         setError("Bike is not available for selected time slot.");
       }
     } catch (err) {
@@ -73,12 +73,8 @@ export function BikeBooking({
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const start = new Date(`${startDate}T${startTime}`)
-      .toISOString()
-      .replace("Z", "+00:00");
-    const end = new Date(`${endDate}T${endTime}`)
-      .toISOString()
-      .replace("Z", "+00:00");
+    const start = new Date(`${startDate}T${startTime}`).toISOString();
+    const end = new Date(`${endDate}T${endTime}`).toISOString();
 
     setIsLoading(true);
     setError(null);
@@ -98,14 +94,13 @@ export function BikeBooking({
   }
 
   function getEstimatedPrice(): number | null {
-    const pricePerHour: number = 15;
     if (!startDate || !startTime || !endDate || !endTime) return null;
     const start = new Date(`${startDate}T${startTime}`);
     const end = new Date(`${endDate}T${endTime}`);
     const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
     if (hours < 0) return null;
     // Place holder price
-    return Math.round(hours * pricePerHour);
+    return Math.round(hours * bike.pricePerHour);
   }
 
   const estimatedPrice = getEstimatedPrice();
@@ -125,7 +120,7 @@ export function BikeBooking({
         <div className="bike-info">
           <img
             className="bike-image"
-            src="https://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/11/2023/08/Canyon-Torque-Mullet-AL-6-Aug292.jpg"
+            src={bike.imageUrl}
             alt={`${bike.name} image`}
           ></img>
           <span className="bike-type">{bike.type}</span>
