@@ -1,11 +1,7 @@
 import { request } from "./client";
-import type { User } from "./types";
+import type { LoginInput, RegisterInput, User } from "./types";
 
-export async function register(input: {
-  name: string;
-  email: string;
-  password: string;
-}): Promise<User> {
+export async function register(input: RegisterInput): Promise<User> {
   const user = await request<User>("/users/register", {
     method: "POST",
     body: JSON.stringify(input),
@@ -15,10 +11,7 @@ export async function register(input: {
   return user;
 }
 
-export async function login(input: {
-  email: string;
-  password: string;
-}): Promise<User> {
+export async function login(input: LoginInput): Promise<User> {
   const user = await request<User>("/users/login", {
     method: "POST",
     body: JSON.stringify(input),
