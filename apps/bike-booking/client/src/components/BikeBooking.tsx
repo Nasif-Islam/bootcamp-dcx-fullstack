@@ -27,7 +27,7 @@ export function BikeBooking({
   const [endTime, setEndTime] = useState("");
 
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function checkAvailability() {
