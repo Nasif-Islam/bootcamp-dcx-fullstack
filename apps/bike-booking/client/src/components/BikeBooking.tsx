@@ -32,18 +32,21 @@ export function BikeBooking({
 
   async function checkAvailability() {
     if (!startDate || !startTime || !endDate || !endTime) {
-      return "Please fill in all date/time fields";
+      setError("Please fill in all date/time fields.");
+      return;
     }
 
     const startDateTime = `${startDate}T${startTime}:00`;
     const endDateTime = `${endDate}T${endTime}:00`;
 
     if (new Date(endDateTime) <= new Date(startDateTime)) {
-      return "End datetime must be after start datetime";
+      setError("End date/time must be after start date/time.");
+      return;
     }
 
     if (new Date() > new Date(startDateTime)) {
-      return "Cannot book in the past";
+      setError("Cannot book in the past.");
+      return;
     }
 
     setIsLoading(true);
@@ -55,12 +58,12 @@ export function BikeBooking({
         endDateTime,
       );
       setIsAvailable(available.available);
-      if (!available) {
+      if (!isAvailable) {
         setError("Bike is not available for selected time slot.");
       }
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Availability check failed",
+        err instanceof Error ? err.message : "Availability check failed.",
       );
     } finally {
       setIsLoading(false);
@@ -70,8 +73,12 @@ export function BikeBooking({
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const start = new Date(`${startDate}T${startTime}`);
-    const end = new Date(`${endDate}T${endTime}`);
+    const start = new Date(`${startDate}T${startTime}`)
+      .toISOString()
+      .replace("Z", "+00:00");
+    const end = new Date(`${endDate}T${endTime}`)
+      .toISOString()
+      .replace("Z", "+00:00");
 
     setIsLoading(true);
     setError(null);
