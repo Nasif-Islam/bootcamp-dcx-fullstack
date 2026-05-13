@@ -1,9 +1,21 @@
+.bike-list-container {
+  padding: 20px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.title {
+  color: var(--black);
+  text-align: start;
+  font-weight: 700;
+}
+
 .bike-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 10px;
   row-gap: 50px;
-  padding: 20px;
+  padding: 20px 0px;
   max-width: 1120px;
   margin: 0 auto;
   justify-content: center;
