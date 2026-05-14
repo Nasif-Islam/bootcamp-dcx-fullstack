@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import "./BikeBook.css";
 import { getBikeAvailability } from "../api/bikes";
 import { createBooking } from "../api/bookings";
@@ -7,16 +8,15 @@ import type { Booking, Bike } from "../api/types";
 interface BookingFormProps {
   bike: Bike;
   userId: string;
-  onSuccess: (booking: Booking) => void;
-  onBack: () => void;
+  bookingHandler: (booking: Booking) => void;
 }
 
 export function BikeBooking({
   bike,
   userId,
-  onSuccess,
-  onBack,
+  bookingHandler,
 }: BookingFormProps) {
+  const navigate = useNavigate();
   // minimal format for todays date
   const today = new Date().toISOString().split("T")[0];
 
@@ -87,7 +87,7 @@ export function BikeBooking({
         startTime: start,
         endTime: end,
       });
-      onSuccess(booking);
+      bookingHandler(booking);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create booking");
     } finally {
@@ -113,7 +113,7 @@ export function BikeBooking({
     <div className="form-container">
       <div className="form-header">
         <h2>{bike.name}</h2>
-        <button className="back-button" onClick={onBack}>
+        <button className="back-button" onClick={() => navigate("/")}>
           ← Back to bikes
         </button>
       </div>
