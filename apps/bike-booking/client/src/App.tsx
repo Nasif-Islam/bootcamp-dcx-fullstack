@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 // import ApiSmokeTest from "./ApiSmokeTest";
-import BrowseBikes from "./pages/BrowseBikes";
+import BikeList from "./pages/BikeList";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,7 +19,7 @@ function App() {
       </div>
       {/* ignore smoke test component - for dev purposes */}
       {/* <ApiSmokeTest>  */}
-      <BrowseBikes />
+      <BikeList />
     </>
   );
 }

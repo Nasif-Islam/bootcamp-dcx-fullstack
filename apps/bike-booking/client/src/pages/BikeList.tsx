@@ -5,7 +5,7 @@ import { getBikes } from "../api/bikes";
 import type { BikeListItem } from "../api/types";
 import {useState, useEffect} from "react";
 
-const BrowseBikes = () => {
+const BikeList = () => {
 
   // Helper function to get the appropriate icon for each bike type
   const getTypeIcon = (type: string) => {
@@ -74,4 +74,4 @@ const BrowseBikes = () => {
   );
 };
 
-export default BrowseBikes;
+export default BikeList;
