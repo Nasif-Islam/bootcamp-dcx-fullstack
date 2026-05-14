@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import type { Booking } from "../api/types";
+import "./BookingConfirmation.css";
 
 interface BookingConfirmationInterface {
   booking: Booking;
@@ -6,6 +8,7 @@ interface BookingConfirmationInterface {
 
 export function BookingConfirmation({ booking }: BookingConfirmationInterface) {
   const bike = booking.bikeId;
+  const navigate = useNavigate();
 
   function totalPrice() {
     const hours = booking.duration / (1000 * 60 * 60);
@@ -13,9 +16,26 @@ export function BookingConfirmation({ booking }: BookingConfirmationInterface) {
   }
 
   function formatDateTime(time: string) {
-    const dateString = new Date(time).toDateString();
-    return dateString;
+    const startDateTime = new Date(time);
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    } as const;
+
+    const formattedDate = startDateTime.toLocaleDateString(undefined, options);
+
+    const formattedTime = startDateTime.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+
+    console.log(`${formattedDate} at ${formattedTime}`);
+    return `${formattedDate} at ${formattedTime}`;
   }
+
   return (
     <div className="container">
       <div className="card">
@@ -28,7 +48,7 @@ export function BookingConfirmation({ booking }: BookingConfirmationInterface) {
 
           <div className="row">
             <span className="label">Start:</span>
-            <span>{formatDateTime(booking.startTime)}</span>
+            <span className="">{formatDateTime(booking.startTime)}</span>
           </div>
 
           <div className="row">
@@ -47,8 +67,18 @@ export function BookingConfirmation({ booking }: BookingConfirmationInterface) {
         </div>
 
         <div className="actions">
-          <button className="view-button">View My Bookings</button>
-          <button className="book-another-button">Book Another Bike</button>
+          <button
+            className="view-button"
+            onClick={() => navigate("/MyBookings")}
+          >
+            View My Bookings
+          </button>
+          <button
+            className="book-another-button"
+            onClick={() => navigate("/Bikes")}
+          >
+            Book Another Bike
+          </button>
         </div>
       </div>
     </div>

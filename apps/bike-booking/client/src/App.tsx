@@ -2,16 +2,22 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import BikeBooking from "./components/BikeBooking";
 import { getBike } from "./api/bikes";
-import type { Bike } from "./api/types";
+import type { Bike, Booking } from "./api/types";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import BookingConfirmation from "./components/BookingConfirmation";
 
 function App() {
+  const navigate = useNavigate();
+
+  // STATE
+  const [previousBooking, setPreviousBooking] = useState<Booking | null>(null);
   const [bike, setBike] = useState<Bike | null>(null);
 
+  // LOAD BIKE
   useEffect(() => {
     async function loadBike() {
       try {
         const data = await getBike("69fde64c068710ca628e05dc");
-        // console.log("Bike data:", data);
         setBike(data);
       } catch (err) {
         console.error("Failed to fetch bike:", err);
@@ -25,19 +31,51 @@ function App() {
     return <div>Loading...</div>;
   }
 
-  function placeHolder() {
-    return;
+  // HANDLE BOOKING
+  function bookingHandler(booking: Booking) {
+    setPreviousBooking(booking);
+
+    // Navigate to confirmation page
+    navigate("/BookingConfirmation");
   }
 
   return (
-    <>
-      <BikeBooking
-        bike={bike}
-        userId="69fde64c068710ca628e05da"
-        onSuccess={placeHolder}
-        onBack={placeHolder}
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <BikeBooking
+            bike={bike}
+            userId="69fde64c068710ca628e05da"
+            bookingHandler={bookingHandler}
+          />
+        }
       />
-    </>
+
+      <Route
+        path="/Booking"
+        element={
+          <BikeBooking
+            bike={bike}
+            userId="69fde64c068710ca628e05da"
+            bookingHandler={bookingHandler}
+          />
+        }
+      />
+
+      <Route
+        path="/BookingConfirmation"
+        element={
+          previousBooking ? (
+            <BookingConfirmation booking={previousBooking} />
+          ) : (
+            <div>No booking found. Please complete a booking first.</div>
+          )
+        }
+      />
+
+      <Route path="*" element={<div>Page not found</div>} />
+    </Routes>
   );
 }
 
