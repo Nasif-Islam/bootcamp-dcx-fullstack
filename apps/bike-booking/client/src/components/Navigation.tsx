@@ -1,32 +1,66 @@
+import { NavLink } from "react-router-dom";
+import { useUser } from "../context/useUser";
 import "./Navigation.css";
 
-export function Navigation() {
-  const loggedIn: boolean = true;
-  const user = {
-    fname: "Byron",
-    lname: "Biggs",
-  };
-  function placeHolder() {
-    return;
-  }
-
-  // Need some kind of placeholder for page checking for the active class
+export default function Navigation() {
+  const { user, isAuthenticated, logout } = useUser();
 
   return (
-    <div className="navbar">
-      <h1>Bike Booking</h1>
-      <div className="right-container">
-        <button>Browse Bikes</button>
-        {loggedIn ? <button>My Bookings</button> : null}
-        <span>{loggedIn ? `Hello, ${user.fname}` : "Hello, Guest"}</span>
-        {loggedIn ? (
-          <button onClick={placeHolder}>Logout</button>
+    <header className="nav">
+      <div className="nav__brand">
+        <span className="nav__icon" aria-hidden="true">
+          🚲
+        </span>
+        <span className="nav__title">Bike Booking</span>
+      </div>
+
+      <div className="nav__actions">
+        <NavLink
+          to="/bikes"
+          end
+          className={({ isActive }) =>
+            `nav__pill ${isActive ? "nav__pill--active" : ""}`
+          }
+        >
+          Browse Bikes
+        </NavLink>
+
+        {isAuthenticated && (
+          <NavLink
+            to="/my-bookings"
+            className={({ isActive }) =>
+              `nav__pill ${isActive ? "nav__pill--active" : ""}`
+            }
+          >
+            My Bookings
+          </NavLink>
+        )}
+
+        {isAuthenticated ? (
+          <>
+            <span className="nav__hello">Hi, {user!.name}</span>
+
+            <button
+              type="button"
+              className="nav__pill nav__pill--logout"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </>
         ) : (
-          <button onClick={placeHolder}>Login</button>
+          <>
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                `nav__pill nav__pill--login ${isActive ? "nav__pill--active" : ""}`
+              }
+            >
+              Login
+            </NavLink>
+          </>
         )}
       </div>
-    </div>
+    </header>
   );
 }
-
-export default Navigation;

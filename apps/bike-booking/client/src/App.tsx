@@ -27,7 +27,7 @@ function App() {
         <Route path="/my-bookings" element={<MyBookings />} />
 
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/register" element={<SignUpPage />} />
 
         <Route path="*" element={<div>Page not found</div>} />
       </Routes>

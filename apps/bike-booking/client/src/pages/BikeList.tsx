@@ -3,10 +3,9 @@ import "./BikeCard.css";
 import TypeFilter from "./TypeFilter";
 import { getBikes } from "../api/bikes";
 import type { BikeListItem } from "../api/types";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 const BikeList = () => {
-
   // Helper function to get the appropriate icon for each bike type
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -19,13 +18,13 @@ const BikeList = () => {
       case "electric":
         return "⚡";
       default:
-        return "⚠️";
+        return "🚲";
     }
   };
-  
+
   const [bikes, setBikes] = useState<BikeListItem[]>([]); // State to hold the list of bikes
   const [selectedType, setSelectedType] = useState<string | null>(null); // State to hold the currently selected bike type for filtering
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch bikes from the API when the component mounts
