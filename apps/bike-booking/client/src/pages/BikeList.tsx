@@ -1,11 +1,11 @@
 import BikeCard from "./BikeCard";
-import "./BikeCard.css";
 import TypeFilter from "./TypeFilter";
 import { getBikes } from "../api/bikes";
 import type { BikeListItem } from "../api/types";
 import { useState } from "react";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import { useAsync } from "../hooks/useAsync";
+import "./BikeList.css";
 
 const BikeList = () => {
   // Helper function to get the appropriate icon for each bike type
@@ -54,6 +54,7 @@ const BikeList = () => {
             : filteredBikes.map((bike) => (
                 <BikeCard
                   key={bike._id}
+                  bikeId={bike._id}
                   bikeImg={bike.imageUrl}
                   bikeName={bike.name}
                   typeIcon={getTypeIcon(bike.type)}

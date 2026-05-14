@@ -1,6 +1,8 @@
 import "./BikeCard.css";
+import { useNavigate } from "react-router-dom";
 
 interface BikeCardProps {
+  bikeId: string;
   bikeImg: string;
   bikeName: string;
   typeIcon: string;
@@ -12,6 +14,7 @@ interface BikeCardProps {
 }
 
 const BikeCard = ({
+  bikeId,
   bikeImg,
   bikeName,
   typeIcon,
@@ -21,34 +24,40 @@ const BikeCard = ({
   availabilityIcon,
   availabilityStatus,
 }: BikeCardProps) => {
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <div className="card-container">
-        <div className="bike-img">
-          <img src={bikeImg} alt="Bike" />
+    <div className="card-container">
+      <div className="bike-img">
+        <img src={bikeImg} alt="Bike" />
+      </div>
+      <div className="bike-info">
+        <h3 className="bike-name">{bikeName}</h3>
+        <div className="type-container">
+          <div className="type-icon">{typeIcon}</div>
+          <p className="type-name">{typeName}</p>
         </div>
-        <div className="bike-info">
-          <h3 className="bike-name">{bikeName}</h3>
-          <div className="type-container">
-            <div className="type-icon">{typeIcon}</div>
-            <p className="type-name">{typeName}</p>
-          </div>
-          <p className="bike-desc">{bikeDesc}</p>
-          <div className="price-availability-badge-container">
-            <span className="price-badge">£{bikePrice}/hour</span>
-            <div className="availability-badge-container">
-              <div className="availability-badge">
-                <img
-                  src={availabilityIcon}
-                  alt="Availability"
-                  className="availability-icon"
-                />
-                <p className="availability-status">{availabilityStatus}</p>
-              </div>
+        <p className="bike-desc">{bikeDesc}</p>
+        <div className="price-availability-badge-container">
+          <span className="price-badge">£{bikePrice}/hour</span>
+          <div className="availability-badge-container">
+            <div className="availability-badge">
+              <img
+                src={availabilityIcon}
+                alt="Availability"
+                className="availability-icon"
+              />
+              <p className="availability-status">{availabilityStatus}</p>
             </div>
           </div>
-          <button className="book-now-btn">Book Now</button>
         </div>
+        <button
+          type="button"
+          className="book-now-btn"
+          onClick={() => navigate(`/booking/${bikeId}`)}
+        >
+          Book Now
+        </button>
       </div>
     </div>
   );
