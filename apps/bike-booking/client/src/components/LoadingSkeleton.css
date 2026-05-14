@@ -1,0 +1,54 @@
+.skeleton-bike-img{
+    height: 200px;
+    width: 100%;
+    background-color: var(--light-grey);
+}
+
+.skeleton-bike-name {
+    width: 60%;
+    height: 20px;
+    background-color: var(--light-grey);
+    margin: 15px 0 0 15px;
+}
+
+.skeleton-type-container {
+    width: 90px;
+    height: 25px;
+    background-color: var(--light-grey);
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.skeleton-bike-desc {
+    width: 80%;
+    height: 15px;
+    background-color: var(--light-grey);
+    margin: 15px 0 0 15px;
+}
+
+.skeleton-price-availability-badge-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    margin-top: 15px;
+}
+
+.skeleton-price {
+    width: 30%;
+    height: 20px;
+    background-color: var(--light-grey);
+}
+
+.skeleton-availability-badge {
+    width: 30%;
+    height: 20px;
+    background-color: var(--light-grey);
+}
+
+.skeleton-book-now-btn {
+    width: 92%;
+    height: 40px;
+    background-color: var(--light-grey);
+    margin: 25px auto 20px auto;
+}
