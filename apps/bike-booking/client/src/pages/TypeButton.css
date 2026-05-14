@@ -1,5 +1,13 @@
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-bottom: 10px;
+}
+
 .type-btn {
   color: var(--blue);
+  background-color: var(--white);
   border: 1.5px solid var(--blue);
   padding: 5px 15px;
   border-radius: 20px;
@@ -16,9 +24,11 @@
   cursor: pointer;
 }
 
-.filter-container {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  margin-bottom: 10px;
+.type-btn:focus {
+  outline: none;
+}
+
+.type-btn.active {
+  background-color: var(--blue);
+  color: white;
 }
