@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+// import ApiSmokeTest from "./ApiSmokeTest";
+import BikeList from "./pages/BikeList";
 import BikeBooking from "./components/BikeBooking";
 import { getBike } from "./api/bikes";
 import type { Bike, Booking } from "./api/types";
