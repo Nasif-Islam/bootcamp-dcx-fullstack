@@ -17,7 +17,7 @@ function getApiErrorMessage(err: ApiError): string {
 }
 
 function isInvalidCredentialsError(err: ApiError): boolean {
-  if (err.status !== 400) return false;
+  if (err.status !== 401) return false;
   const msg = getApiErrorMessage(err).toLowerCase();
   return msg.includes("invalid email or password");
 }
