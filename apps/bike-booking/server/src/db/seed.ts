@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import { Bike } from "../models/index";
-import { bikes } from "../data/data";
+import { Bike, User } from "../models/index";
+import { bikes, users } from "../data/test-data";
 import { connectToDB, disconnectFromDB } from "./connection";
 
 dotenv.config();
@@ -10,11 +10,17 @@ const seedDB = async () => {
     console.log("Connecting to MongoDB...");
     await connectToDB();
 
-    const deleteResult = await Bike.deleteMany({});
-    console.log(`Deleted: ${deleteResult.deletedCount} bikes`);
+    const deleteBikesResult = await Bike.deleteMany({});
+    console.log(`Deleted: ${deleteBikesResult.deletedCount} bikes`);
 
-    const inserted = await Bike.insertMany(bikes);
-    console.log(`Inserted: ${inserted.length} bikes`);
+    const insertedBikes = await Bike.insertMany(bikes);
+    console.log(`Inserted: ${insertedBikes.length} bikes`);
+
+    const deleteUsersResult = await User.deleteMany({});
+    console.log(`Deleted: ${deleteUsersResult.deletedCount} users`);
+
+    const insertedUsersResult = await User.create(users);
+    console.log(`Inserted: ${insertedUsersResult.length} users`);
 
     process.exitCode = 0;
   } catch (err) {

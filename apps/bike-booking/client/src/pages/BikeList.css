@@ -2,6 +2,7 @@
   padding: 20px;
   max-width: 1120px;
   margin: 0 auto;
+  padding-bottom: 96px;
 }
 
 .title {
@@ -13,9 +14,21 @@
 
 .bike-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 10px;
-  row-gap: 50px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
   padding: 20px 0;
+  align-items: start;
   justify-items: center;
+}
+
+@media (max-width: 980px) {
+  .bike-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .bike-cards-grid {
+    grid-template-columns: 1fr;
+  }
 }

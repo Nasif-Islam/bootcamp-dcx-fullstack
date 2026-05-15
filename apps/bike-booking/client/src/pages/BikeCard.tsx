@@ -11,6 +11,7 @@ interface BikeCardProps {
   bikePrice: number;
   availabilityIcon: string;
   availabilityStatus: string;
+  isAvailable: boolean;
 }
 
 const BikeCard = ({
@@ -23,43 +24,51 @@ const BikeCard = ({
   bikePrice,
   availabilityIcon,
   availabilityStatus,
+  isAvailable,
 }: BikeCardProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="card-container">
-      <div className="bike-img">
-        <img src={bikeImg} alt="Bike" />
+    <article className="bikeCard">
+      <div className="bikeCard__imageWrap">
+        <img className="bikeCard__image" src={bikeImg} alt={bikeName} />
       </div>
-      <div className="bike-info">
-        <h3 className="bike-name">{bikeName}</h3>
-        <div className="type-container">
-          <div className="type-icon">{typeIcon}</div>
-          <p className="type-name">{typeName}</p>
+
+      <div className="bikeCard__content">
+        <h3 className="bikeCard__title">{bikeName}</h3>
+
+        <div className="bikeCard__typePill">
+          <span className="bikeCard__typeIcon">{typeIcon}</span>
+          <span className="bikeCard__typeText">{typeName}</span>
         </div>
-        <p className="bike-desc">{bikeDesc}</p>
-        <div className="price-availability-badge-container">
-          <span className="price-badge">£{bikePrice}/hour</span>
-          <div className="availability-badge-container">
-            <div className="availability-badge">
-              <img
-                src={availabilityIcon}
-                alt="Availability"
-                className="availability-icon"
-              />
-              <p className="availability-status">{availabilityStatus}</p>
-            </div>
-          </div>
+
+        <p className="bikeCard__desc">{bikeDesc}</p>
+
+        <div className="bikeCard__metaRow">
+          <span className="bikeCard__price">£{bikePrice}/hour</span>
+
+          <span className="bikeCard__availability">
+            <img
+              src={availabilityIcon}
+              alt=""
+              className="bikeCard__availabilityIcon"
+            />
+            <span className="bikeCard__availabilityText">
+              {availabilityStatus}
+            </span>
+          </span>
         </div>
+
         <button
           type="button"
-          className="book-now-btn"
-          onClick={() => navigate(`/booking/${bikeId}`)}
+          className="bikeCard__bookBtn"
+          disabled={!isAvailable}
+          onClick={() => isAvailable && navigate(`/booking/${bikeId}`)}
         >
           Book Now
         </button>
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -50,3 +50,31 @@ export const bikes = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK7M2nyQw5qdLFZpeS4vYyDU51y4B2B62ykw&s",
   },
 ];
+
+export const users = [
+  {
+    name: "Test User One",
+    email: "test1@example.com",
+    password: "password123",
+  },
+  {
+    name: "Test User Two",
+    email: "test2@example.com",
+    password: "password123",
+  },
+  {
+    name: "Test User Three",
+    email: "test3@example.com",
+    password: "password123",
+  },
+  {
+    name: "Test User Four",
+    email: "test4@example.com",
+    password: "password123",
+  },
+  {
+    name: "Test User Five",
+    email: "test5@example.com",
+    password: "password123",
+  },
+];

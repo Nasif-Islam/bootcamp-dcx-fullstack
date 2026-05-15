@@ -64,9 +64,8 @@ const BikeList = () => {
                   bikeDesc={bike.description}
                   bikePrice={bike.pricePerHour}
                   availabilityIcon="https://cdn-icons-png.flaticon.com/512/190/190411.png"
-                  availabilityStatus={
-                    bike.isAvailable ? "Available" : "Unavailable"
-                  }
+                  isAvailable={bike.isAvailable}
+                  availabilityStatus={bike.isAvailable ? "Available" : "Booked"}
                 />
               ))}
         </div>
