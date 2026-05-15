@@ -1,5 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
 import { User } from "../models/index";
 
 const usersRouter = express.Router();
@@ -37,7 +39,13 @@ usersRouter.post("/register", async (req, res) => {
       name,
     });
 
-    return res.status(201).json(user);
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: "1d" },
+    );
+
+    return res.status(201).json({ user, token });
   } catch (err: unknown) {
     if (err instanceof mongoose.Error.ValidationError) {
       return res.status(400).json({ error: err.message });
@@ -68,7 +76,21 @@ usersRouter.post("/login", async (req, res) => {
     if (!passwordMatches)
       return res.status(401).json({ error: "Invalid email or password" });
 
-    return res.json(user);
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    // Return user info and token
+    return res.json({
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      },
+      token,
+    });
   } catch (err) {
     console.error("Login error:", err);
     return res.status(500).json({ error: "Failed to login" });

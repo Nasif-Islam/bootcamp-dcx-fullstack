@@ -35,12 +35,17 @@ export async function request<T>(
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
+    // Attach Authorization header if token is present
+    const token = localStorage.getItem("token");
+    const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
+    const mergedHeaders = {
+      "Content-Type": "application/json",
+      ...(headers ?? {}),
+      ...(authHeaders as Record<string, string>),
+    };
     const res = await fetch(url, {
       ...rest,
-      headers: {
-        "Content-Type": "application/json",
-        ...(headers ?? {}),
-      },
+      headers: mergedHeaders,
       signal: controller.signal,
     });
 
