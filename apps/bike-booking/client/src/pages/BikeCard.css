@@ -97,6 +97,10 @@
   white-space: nowrap;
 }
 
+.bikeCard__availabilityText {
+  line-height: 1;
+}
+
 .bikeCard__availability--available {
   background: #dff3e3;
   color: #1f6b2c;

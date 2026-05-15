@@ -23,7 +23,6 @@ const BikeCard = ({
   bikeDesc,
   bikePrice,
   availabilityIcon,
-  availabilityStatus,
   isAvailable,
 }: BikeCardProps) => {
   const navigate = useNavigate();
@@ -46,16 +45,21 @@ const BikeCard = ({
 
         <div className="bikeCard__metaRow">
           <span className="bikeCard__price">£{bikePrice}/hour</span>
-
-          <span className="bikeCard__availability">
+          <span
+            className={`bikeCard__availability ${
+              isAvailable
+                ? "bikeCard__availability--available"
+                : "bikeCard__availability--booked"
+            }`}
+          >
             <img
               src={availabilityIcon}
               alt=""
               className="bikeCard__availabilityIcon"
             />
-            <span
-              className={`bikeCard__availability bikeCard__availability--${isAvailable ? "available" : "booked"}`}
-            ></span>
+            <span className="bikeCard__availabilityText">
+              {isAvailable ? "Available" : "Booked"}
+            </span>
           </span>
         </div>
 
