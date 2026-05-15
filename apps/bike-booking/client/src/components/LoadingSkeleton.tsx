@@ -3,7 +3,7 @@ import "./LoadingSkeleton.css";
 const LoadingSkeleton = () => {
   return (
     <div>
-      <div className="card-container">
+      <div className="skeleton-card">
         <div className="skeleton-bike-img"></div>
         <div className="skeleton-bike-info">
           <div className="skeleton-bike-name"></div>

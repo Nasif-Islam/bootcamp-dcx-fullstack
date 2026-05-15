@@ -1,14 +1,13 @@
 import BikeCard from "./BikeCard";
-import "./BikeCard.css";
 import TypeFilter from "./TypeFilter";
 import { getBikes } from "../api/bikes";
 import type { BikeListItem } from "../api/types";
 import { useState } from "react";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import { useAsync } from "../hooks/useAsync";
+import "./BikeList.css";
 
 const BikeList = () => {
-
   // Helper function to get the appropriate icon for each bike type
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -21,7 +20,7 @@ const BikeList = () => {
       case "electric":
         return "⚡";
       default:
-        return "⚠️";
+        return "🚲";
     }
   };
 
@@ -31,12 +30,11 @@ const BikeList = () => {
   const { data: bikes, loading, error } = useAsync<BikeListItem[]>(getBikes);
 
   // Filter bikes based on the selected type. If no type is selected, show all bikes
- 
-const filteredBikes =
-  selectedType && bikes
-    ? bikes.filter((bike) => bike.type === selectedType)
-    : bikes || [];
 
+  const filteredBikes =
+    selectedType && bikes
+      ? bikes.filter((bike) => bike.type === selectedType)
+      : bikes || [];
 
   if (error) return <p>Error: {error}</p>;
 
@@ -56,6 +54,7 @@ const filteredBikes =
             : filteredBikes.map((bike) => (
                 <BikeCard
                   key={bike._id}
+                  bikeId={bike._id}
                   bikeImg={bike.imageUrl}
                   bikeName={bike.name}
                   typeIcon={getTypeIcon(bike.type)}
@@ -65,9 +64,8 @@ const filteredBikes =
                   bikeDesc={bike.description}
                   bikePrice={bike.pricePerHour}
                   availabilityIcon="https://cdn-icons-png.flaticon.com/512/190/190411.png"
-                  availabilityStatus={
-                    bike.isAvailable ? "Available" : "Unavailable"
-                  }
+                  isAvailable={bike.isAvailable}
+                  availabilityStatus={bike.isAvailable ? "Available" : "Booked"}
                 />
               ))}
         </div>

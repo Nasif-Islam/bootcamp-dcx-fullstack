@@ -1,16 +1,14 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Default Styling */
+  color: #111827;
   line-height: 1.5;
   font-weight: 400;
-
-  color: rgba(255, 255, 255, 0.87);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Bike booking colour variables and typography */
+  /* Colors */
   --blue: #5d91e0;
   --purple: #674595;
   --dark-lilac: #7f62a1;
@@ -24,6 +22,8 @@
 
   /* Typography */
   --font-style: "Roboto", sans-serif;
+
+  --footer-height: 10px;
 }
 
 * {
@@ -35,7 +35,6 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--off-white);
-
 }
 
 h1 {
@@ -43,13 +42,20 @@ h1 {
   line-height: 1.1;
 }
 
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app__content {
+  flex: 1;
+  padding-bottom: var(--footer-height);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
-  }
-  button {
-    background-color: #f9f9f9;
-    color: #213547;
   }
 }

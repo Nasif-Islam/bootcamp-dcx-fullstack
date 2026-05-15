@@ -1,6 +1,8 @@
 import "./BikeCard.css";
+import { useNavigate } from "react-router-dom";
 
 interface BikeCardProps {
+  bikeId: string;
   bikeImg: string;
   bikeName: string;
   typeIcon: string;
@@ -9,9 +11,11 @@ interface BikeCardProps {
   bikePrice: number;
   availabilityIcon: string;
   availabilityStatus: string;
+  isAvailable: boolean;
 }
 
 const BikeCard = ({
+  bikeId,
   bikeImg,
   bikeName,
   typeIcon,
@@ -20,37 +24,51 @@ const BikeCard = ({
   bikePrice,
   availabilityIcon,
   availabilityStatus,
+  isAvailable,
 }: BikeCardProps) => {
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <div className="card-container">
-        <div className="bike-img">
-          <img src={bikeImg} alt="Bike" />
-        </div>
-        <div className="bike-info">
-          <h3 className="bike-name">{bikeName}</h3>
-          <div className="type-container">
-            <div className="type-icon">{typeIcon}</div>
-            <p className="type-name">{typeName}</p>
-          </div>
-          <p className="bike-desc">{bikeDesc}</p>
-          <div className="price-availability-badge-container">
-            <span className="price-badge">£{bikePrice}/hour</span>
-            <div className="availability-badge-container">
-              <div className="availability-badge">
-                <img
-                  src={availabilityIcon}
-                  alt="Availability"
-                  className="availability-icon"
-                />
-                <p className="availability-status">{availabilityStatus}</p>
-              </div>
-            </div>
-          </div>
-          <button className="book-now-btn">Book Now</button>
-        </div>
+    <article className="bikeCard">
+      <div className="bikeCard__imageWrap">
+        <img className="bikeCard__image" src={bikeImg} alt={bikeName} />
       </div>
-    </div>
+
+      <div className="bikeCard__content">
+        <h3 className="bikeCard__title">{bikeName}</h3>
+
+        <div className="bikeCard__typePill">
+          <span className="bikeCard__typeIcon">{typeIcon}</span>
+          <span className="bikeCard__typeText">{typeName}</span>
+        </div>
+
+        <p className="bikeCard__desc">{bikeDesc}</p>
+
+        <div className="bikeCard__metaRow">
+          <span className="bikeCard__price">£{bikePrice}/hour</span>
+
+          <span className="bikeCard__availability">
+            <img
+              src={availabilityIcon}
+              alt=""
+              className="bikeCard__availabilityIcon"
+            />
+            <span className="bikeCard__availabilityText">
+              {availabilityStatus}
+            </span>
+          </span>
+        </div>
+
+        <button
+          type="button"
+          className="bikeCard__bookBtn"
+          disabled={!isAvailable}
+          onClick={() => isAvailable && navigate(`/booking/${bikeId}`)}
+        >
+          Book Now
+        </button>
+      </div>
+    </article>
   );
 };
 

@@ -1,0 +1,34 @@
+.bike-list-container {
+  padding: 20px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-bottom: 96px;
+}
+
+.title {
+  color: var(--black, #111827);
+  text-align: left;
+  font-weight: 700;
+  margin: 0 0 14px;
+}
+
+.bike-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding: 20px 0;
+  align-items: start;
+  justify-items: center;
+}
+
+@media (max-width: 980px) {
+  .bike-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .bike-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

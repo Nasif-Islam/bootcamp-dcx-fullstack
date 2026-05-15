@@ -69,13 +69,13 @@ export function BookingConfirmation({ booking }: BookingConfirmationInterface) {
         <div className="actions">
           <button
             className="view-button"
-            onClick={() => navigate("/MyBookings")}
+            onClick={() => navigate("/my-bookings")}
           >
             View My Bookings
           </button>
           <button
             className="book-another-button"
-            onClick={() => navigate("/Bikes")}
+            onClick={() => navigate("/bikes")}
           >
             Book Another Bike
           </button>
@@ -84,5 +84,3 @@ export function BookingConfirmation({ booking }: BookingConfirmationInterface) {
     </div>
   );
 }
-
-export default BookingConfirmation;
