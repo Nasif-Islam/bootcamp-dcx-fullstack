@@ -63,7 +63,11 @@ const BikeList = () => {
                   }
                   bikeDesc={bike.description}
                   bikePrice={bike.pricePerHour}
-                  availabilityIcon="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+                  availabilityIcon={
+                    bike.isAvailable
+                      ? "https://cdn-icons-png.flaticon.com/512/190/190411.png"
+                      : "https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+                  }
                   isAvailable={bike.isAvailable}
                   availabilityStatus={bike.isAvailable ? "Available" : "Booked"}
                 />
