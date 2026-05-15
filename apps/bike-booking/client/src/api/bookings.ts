@@ -1,7 +1,13 @@
 import { request } from "./client";
 import type { Booking, CreateBookingInput } from "./types";
 
-export function createBooking(input: CreateBookingInput): Promise<Booking> {
+export function getUserBookings(): Promise<Booking[]> {
+  return request<Booking[]>(`/bookings`);
+}
+
+export function createBooking(
+  input: Omit<CreateBookingInput, "userId">,
+): Promise<Booking> {
   return request<Booking>("/bookings", {
     method: "POST",
     body: JSON.stringify(input),
