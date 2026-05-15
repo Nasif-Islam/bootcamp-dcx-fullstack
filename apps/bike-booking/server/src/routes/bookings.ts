@@ -3,19 +3,19 @@ import mongoose from "mongoose";
 import { Bike } from "../models/Bike";
 import { Booking } from "../models/Booking";
 import { checkBikeAvailability } from "../services/availabilityService";
+import { authMiddleware, AuthRequest } from "../middleware/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const filter: Record<string, unknown> = {};
-  const userId = req.query.userId as string | undefined;
+router.use(authMiddleware);
 
-  if (userId) {
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: "Invalid userId" });
-    }
-    filter.userId = new mongoose.Types.ObjectId(userId);
+router.get("/", async (req: AuthRequest, res) => {
+  const filter: Record<string, unknown> = {};
+  // Only allow bookings for the authenticated user
+  if (!req.userId) {
+    return res.status(401).json({ error: "Unauthorized" });
   }
+  filter.userId = new mongoose.Types.ObjectId(req.userId);
 
   try {
     const bookings = await Booking.find(filter).populate("bikeId").exec();
@@ -66,13 +66,14 @@ router.get("/availability", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  const { bikeId, userId, startTime, endTime } = req.body;
+router.post("/", async (req: AuthRequest, res) => {
+  const { bikeId, startTime, endTime } = req.body;
+  const userId = req.userId;
 
   if (!bikeId || !userId || !startTime || !endTime) {
     return res
       .status(400)
-      .json({ error: "bikeId, userId, startTime, and endTime are required" });
+      .json({ error: "bikeId, startTime, and endTime are required" });
   }
 
   if (
@@ -124,27 +125,32 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req: AuthRequest, res) => {
   const { id } = req.params;
+  const userId = req.userId;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  const bookingId = Array.isArray(id) ? id[0] : id;
+  if (!mongoose.Types.ObjectId.isValid(bookingId)) {
     return res.status(400).json({ error: "Invalid booking id" });
   }
 
   try {
-    const booking = await Booking.findByIdAndUpdate(
-      id,
+    // Only allow the owner to cancel their booking
+    const booking = await Booking.findById(bookingId).exec();
+    if (!booking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+    if (!userId || booking.userId.toString() !== userId) {
+      return res.status(403).json({ error: "Forbidden: Not your booking" });
+    }
+    const cancelled = await Booking.findByIdAndUpdate(
+      bookingId,
       { status: "cancelled" },
       { new: true },
     )
       .populate("bikeId")
       .exec();
-
-    if (!booking) {
-      return res.status(404).json({ error: "Booking not found" });
-    }
-
-    return res.json(booking);
+    return res.json(cancelled);
   } catch (error) {
     console.error("Error cancelling booking:", error);
     return res.status(500).json({ error: "Failed to cancel booking" });

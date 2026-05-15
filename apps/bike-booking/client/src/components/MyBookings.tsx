@@ -18,6 +18,7 @@ export function MyBookings() {
     if (!isAuthenticated || !user) {
       setLoading(false);
       setBookings([]);
+      setError(null);
       return;
     }
 
