@@ -33,7 +33,7 @@
 }
 
 .booking-card {
-  background: white;
+  background: var(--white);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -110,7 +110,7 @@
 
 .cancel-button {
   padding: 8px 16px;
-  background: white;
+  background: var(--white);
   border: 1px solid #dc3545;
   color: #dc3545;
   border-radius: 6px;
@@ -141,7 +141,7 @@
 .empty {
   text-align: center;
   padding: 60px 20px;
-  background: white;
+  background: var(--white);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -153,8 +153,8 @@
 
 .browse-button {
   padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+  color: var(--white);
   border: none;
   border-radius: 8px;
   font-size: 1rem;

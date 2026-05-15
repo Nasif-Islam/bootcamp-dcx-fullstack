@@ -7,7 +7,7 @@
 }
 
 .card {
-  background: white;
+  background: var(--white);
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   padding: 40px;
@@ -26,7 +26,7 @@
   justify-content: center;
   margin: 0 auto 24px;
   font-size: 40px;
-  color: white;
+  color: var(--white);
 }
 
 .card h2 {
@@ -77,7 +77,7 @@
   border-bottom: none;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #667eea;
+  color: var(--indigo);
 }
 
 .booking-id {
@@ -106,8 +106,8 @@
 }
 
 .view-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--dark-lilac) 100%);
+  color: var(--white);
   border: none;
 }
 
@@ -116,9 +116,9 @@
 }
 
 .book-another-button {
-  background: white;
-  color: #667eea;
-  border: 2px solid #667eea;
+  background: var(--white);
+  color: var(--blue);
+  border: 2px solid var(--blue);
 }
 
 .book-another-button:hover {

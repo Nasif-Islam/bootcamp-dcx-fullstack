@@ -6,8 +6,8 @@
   align-items: center;
   justify-content: space-between;
 
-  background: linear-gradient(90deg, #5b6ee1 0%, #764ba2 100%);
-  color: #fff;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--dark-lilac) 100%);
+  color: var(--white);
 
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
   position: sticky;
@@ -61,8 +61,8 @@
     filter 140ms ease,
     transform 80ms ease;
 
-  background: rgba(255, 255, 255, 0.22);
-  color: #fff;
+  background: var(--dusty-lilac);
+  color: var(--white);
 }
 
 .nav__pill:hover {
@@ -74,27 +74,27 @@
 }
 
 .nav__pill.nav__pill--active {
-  background: #ffffff;
-  color: #3856d6;
+  background: var(--white);
+  color: var(--blue);
 }
 
 .nav__hello {
   font-weight: 700;
   font-size: 13px;
-  color: #fff;
+  color: var(--white);
   white-space: nowrap;
   margin-left: 6px;
   margin-right: 6px;
 }
 
 .nav__pill--logout {
-  background: #7b4ea3;
-  color: #fff;
+  background: #ad6a9c;
+  color: var(--white);
 }
 
 .nav__pill--login {
   background: rgba(255, 255, 255, 0.22);
-  color: #fff;
+  color: var(--white);
 }
 
 @media (max-width: 600px) {
