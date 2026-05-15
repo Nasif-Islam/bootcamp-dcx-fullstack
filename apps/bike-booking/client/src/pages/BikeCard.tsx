@@ -53,9 +53,9 @@ const BikeCard = ({
               alt=""
               className="bikeCard__availabilityIcon"
             />
-            <span className="bikeCard__availabilityText">
-              {availabilityStatus}
-            </span>
+            <span
+              className={`bikeCard__availability bikeCard__availability--${isAvailable ? "available" : "booked"}`}
+            ></span>
           </span>
         </div>
 
@@ -63,7 +63,7 @@ const BikeCard = ({
           type="button"
           className="bikeCard__bookBtn"
           disabled={!isAvailable}
-          onClick={() => isAvailable && navigate(`/booking/${bikeId}`)}
+          onClick={() => navigate(`/booking/${bikeId}`)}
         >
           Book Now
         </button>

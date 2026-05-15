@@ -90,13 +90,21 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #dff3e3;
-  color: #1f6b2c;
   border-radius: 6px;
   padding: 4px 8px;
   font-size: 11px;
   font-weight: 700;
   white-space: nowrap;
+}
+
+.bikeCard__availability--available {
+  background: #dff3e3;
+  color: #1f6b2c;
+}
+
+.bikeCard__availability--booked {
+  background: #fee;
+  color: #991b1b;
 }
 
 .bikeCard__availabilityIcon {
