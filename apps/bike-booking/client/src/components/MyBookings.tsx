@@ -98,8 +98,8 @@ export function MyBookings() {
 
   if (!isAuthenticated || !user) {
     return (
-      <div className="mb">
-        <div className="hd">
+      <div className="my-bookings-container">
+        <div className="my-bookings-header">
           <h2>My Bookings</h2>
           <button className="back-button" onClick={onBack}>
             ← Back to bikes
@@ -108,7 +108,7 @@ export function MyBookings() {
 
         <div className="empty">
           <p>Please log in to see your bookings.</p>
-          <button className="btn-browse" onClick={() => navigate("/login")}>
+          <button className="browse-button" onClick={() => navigate("/login")}>
             Go to Login
           </button>
         </div>
@@ -138,33 +138,35 @@ export function MyBookings() {
     return (
       <div
         key={booking._id}
-        className={`card ${isPast ? "past" : ""} ${isCancelled ? "cancelled" : ""}`.trim()}
+        className={`booking-card ${isPast ? "past" : ""} ${isCancelled ? "cancelled" : ""}`.trim()}
       >
-        <div className="bike">
+        <div className="booking-bike">
           <h4>{booking.bikeId?.name ?? "Bike"}</h4>
           <span className="bike-type">
             {booking.bikeId?.type ?? "Unknown type"}
           </span>
         </div>
 
-        <div className="det">
-          <div className="time">
+        <div className="booking-details">
+          <div className="booking-time">
             <span className="label">Start:</span>
             <span>{formatDateTime(booking.startTime)}</span>
           </div>
-          <div className="time">
+          <div className="booking-time">
             <span className="label">End:</span>
             <span>{formatDateTime(booking.endTime)}</span>
           </div>
         </div>
 
-        <div className="act">
-          <span className={`st ${isCancelled ? "cancelled" : "confirmed"}`}>
+        <div className="booking-actions">
+          <span
+            className={`status-badge ${isCancelled ? "cancelled" : "confirmed"}`}
+          >
             {booking.status}
           </span>
           {!isCancelled && !isPast && (
             <button
-              className="btn-cancel"
+              className="cancel-button"
               onClick={() => onCancel(booking._id)}
               disabled={cancellingId === booking._id}
             >
@@ -177,8 +179,8 @@ export function MyBookings() {
   }
 
   return (
-    <div className="mb">
-      <div className="hd">
+    <div className="my-bookings-container">
+      <div className="my-bookings-header">
         <h2>My Bookings</h2>
         <button className="back-button" onClick={onBack}>
           ← Back to bikes
@@ -190,29 +192,29 @@ export function MyBookings() {
       {hasNoBookings ? (
         <div className="empty">
           <p>You don't have any bookings yet.</p>
-          <button className="btn-browse" onClick={onBack}>
+          <button className="browse-button" onClick={onBack}>
             Browse Available Bikes
           </button>
         </div>
       ) : (
         <>
-          <section className="sec">
+          <section className="booking-section">
             <h3>Upcoming Bookings</h3>
             {grouped.upcoming.length === 0 ? (
               <p>No upcoming bookings.</p>
             ) : (
-              <div className="list">
+              <div className="bookings-list">
                 {grouped.upcoming.map((booking) => renderBookingCard(booking))}
               </div>
             )}
           </section>
 
-          <section className="sec">
+          <section className="booking-section">
             <h3>Past Bookings</h3>
             {grouped.past.length === 0 ? (
               <p>No past bookings.</p>
             ) : (
-              <div className="list">
+              <div className="bookings-list">
                 {grouped.past.map((booking) => renderBookingCard(booking))}
               </div>
             )}
