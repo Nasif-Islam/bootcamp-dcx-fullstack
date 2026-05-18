@@ -12,18 +12,6 @@
 
 }
 
-.bikeCard:hover{
-    box-shadow: 0 0 18px var(--indigo);
-    transform: translateY(-5px);
-    cursor: pointer;
-  }
-
-.bikeCard__imageWrap {
-  width: 100%;
-  height: 150px;
-  background: #eef2f7;
-}
-
 .bikeCard__image {
   width: 100%;
   height: 100%;
@@ -98,7 +86,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 4px 8px;
   font-size: 11px;
   font-weight: 700;
@@ -115,7 +103,7 @@
 }
 
 .bikeCard__availability--booked {
-  background: #fee;
+  background: #f6dfe0;
   color: #991b1b;
 }
 
@@ -140,15 +128,53 @@
 
 .bikeCard__bookBtn:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 1;
   box-shadow: none;
-  background: #9ca3af;
+  background: #d1d5db;
+  color: #ffffff;
 }
 
 .bikeCard__bookBtn:hover {
   filter: brightness(1.05);
 }
 
+.bikeCard__bookBtn:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.bikeCard__bookBtn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
 .bikeCard__bookBtn:active {
   transform: translateY(1px);
+}
+
+.bikeCard__imageWrap {
+  width: 100%;
+  height: 150px;
+  background: #eef2f7;
+  position: relative;
+}
+
+.bikeCard__imageWrap--booked .bikeCard__image {
+  filter: grayscale(1) brightness(0.75);
+}
+
+.bikeCard__imageOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17, 24, 39, 0.25);
+}
+
+.bikeCard__imageOverlayText {
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.18);
 }
