@@ -6,7 +6,7 @@
 }
 
 .title {
-  color: var(--black, #111827);
+  color: var(--black);
   text-align: left;
   font-weight: 700;
   margin: 0 0 14px;
