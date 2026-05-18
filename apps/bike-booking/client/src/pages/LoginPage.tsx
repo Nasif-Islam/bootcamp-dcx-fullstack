@@ -102,7 +102,7 @@ export default function LoginPage() {
           <h1 className="auth-title">Welcome Back</h1>
           <p className="auth-subtitle">Sign in to book your ride</p>
 
-          <form onSubmit={onSubmit} className="auth-form">
+          <form noValidate onSubmit={onSubmit} className="auth-form">
             {serverError && (
               <div className="alert alert-error">{serverError}</div>
             )}
