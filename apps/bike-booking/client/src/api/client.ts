@@ -1,5 +1,6 @@
+const envBase = import.meta.env.VITE_API_BASE_URL;
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5001/api";
+  envBase && envBase !== "undefined" ? envBase : "http://localhost:5001/api";
 
 // Error handling
 type ApiErrorBody = {
