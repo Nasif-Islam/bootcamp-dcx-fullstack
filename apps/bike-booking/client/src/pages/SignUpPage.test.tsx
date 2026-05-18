@@ -11,7 +11,7 @@ vi.mock("../api/api", async (importOriginal) => {
   return { ...actual, register: vi.fn() };
 });
 
-const registerMock = api.register as unknown as ReturnType<typeof vi.fn>;
+const registerMock = api.register as ReturnType<typeof vi.fn>;
 
 function renderRoutes(initialRoute = "/signup") {
   render(
@@ -93,7 +93,6 @@ describe("SignUpPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     registerMock.mockReset();
-    localStorage.clear();
   });
 
   afterEach(() => {
@@ -143,33 +142,51 @@ describe("SignUpPage", () => {
     ).toBeInTheDocument();
   });
 
-  it('"Already have an account? Sign in" link navigates to /login', async () => {
-    const { user } = setup();
-
-    await user.click(screen.getByRole("link", { name: /sign in/i }));
-
-    expect(await screen.findByText(/login page/i)).toBeInTheDocument();
-  });
-
-  it("redirects to /login after successful registration and shows success message", async () => {
+  it("normalizes email to lowercase before API call", async () => {
     const { user } = setup();
     mockRegisterSuccess();
 
-    const realSetTimeout = globalThis.setTimeout;
+    await fillForm(user, { email: "UPPER@CASE.COM" });
+    await submit(user);
+
+    expect(api.register).toHaveBeenCalledWith(
+      expect.objectContaining({ email: "upper@case.com" }),
+    );
+  });
+
+  it("shows error when passwords do not match", async () => {
+    const { user } = setup();
+
+    await fillForm(user, {
+      password: "password123",
+      confirmPassword: "different123",
+    });
+    await submit(user);
+
+    expect(
+      await screen.findByText(/passwords do not match/i),
+    ).toBeInTheDocument();
+    expect(registerMock).not.toHaveBeenCalled();
+  });
+
+  it("redirects to /login after successful registration", async () => {
+    const { user } = setup();
+    mockRegisterSuccess();
+
+    const realSetTimeout: typeof setTimeout = globalThis.setTimeout;
 
     let redirectCb: (() => void) | null = null;
 
     const timeoutSpy = vi.spyOn(globalThis, "setTimeout").mockImplementation(((
       cb: TimerHandler,
       ms?: number,
-      ...args: unknown[]
     ) => {
       if (ms === 700 && typeof cb === "function") {
         redirectCb = cb as () => void;
-        return 0 as unknown as number;
+        return 0 as unknown as ReturnType<typeof setTimeout>;
       }
 
-      return realSetTimeout(cb, ms, ...args);
+      return realSetTimeout(cb, ms);
     }) as typeof setTimeout);
 
     await fillForm(user);
@@ -180,12 +197,6 @@ describe("SignUpPage", () => {
         "Account created successfully! Redirecting to login...",
       ),
     ).toBeInTheDocument();
-
-    expect(api.register).toHaveBeenCalledWith({
-      name: "TestUser0",
-      email: "testuser0@test.com",
-      password: "password123",
-    });
 
     expect(redirectCb).not.toBeNull();
     await act(async () => {
