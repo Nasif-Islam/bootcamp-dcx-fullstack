@@ -83,6 +83,9 @@ export function MyBookings() {
   const onBack = () => navigate("/bikes");
 
   async function onCancel(bookingId: string) {
+    if (!window.confirm("Are you sure you want to cancel this booking?")) {
+      return;
+    }
     setCancellingId(bookingId);
     setError(null);
     try {
