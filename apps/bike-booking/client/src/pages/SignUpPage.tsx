@@ -16,9 +16,13 @@ function getApiErrorMessage(err: ApiError): string {
 }
 
 function isDuplicateEmailError(err: ApiError): boolean {
-  if (err.status !== 400) return false;
+  if (err.status !== 400 && err.status !== 409) return false;
   const msg = getApiErrorMessage(err).toLowerCase();
-  return msg.includes("email already in use");
+  return (
+    msg.includes("email already") ||
+    msg.includes("already in use") ||
+    msg.includes("already exists")
+  );
 }
 
 export default function SignUpPage() {
@@ -120,7 +124,7 @@ export default function SignUpPage() {
           <h1 className="auth-title">Create Account</h1>
           <p className="auth-subtitle">Join us and start booking bikes</p>
 
-          <form onSubmit={onSubmit} className="auth-form">
+          <form noValidate onSubmit={onSubmit} className="auth-form">
             {serverError && (
               <div className="alert alert-error">{serverError}</div>
             )}
