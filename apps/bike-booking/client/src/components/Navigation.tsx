@@ -1,9 +1,24 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useUser } from "../context/useUser";
 import "./Navigation.css";
 
 export default function Navigation() {
   const { user, isAuthenticated, logout } = useUser();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 900) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <header className="nav">
@@ -14,13 +29,30 @@ export default function Navigation() {
         <span className="nav__title">Bike Booking</span>
       </div>
 
-      <div className="nav__actions">
+      <button
+        type="button"
+        className={`nav__menu-button ${isMenuOpen ? "nav__menu-button--open" : ""}`}
+        aria-label="Toggle navigation menu"
+        aria-expanded={isMenuOpen}
+        aria-controls="primary-navigation"
+        onClick={() => setIsMenuOpen((open) => !open)}
+      >
+        <span className="nav__menu-line" aria-hidden="true" />
+        <span className="nav__menu-line" aria-hidden="true" />
+        <span className="nav__menu-line" aria-hidden="true" />
+      </button>
+
+      <div
+        id="primary-navigation"
+        className={`nav__actions ${isMenuOpen ? "nav__actions--open" : ""}`}
+      >
         <NavLink
           to="/bikes"
           end
           className={({ isActive }) =>
             `nav__pill ${isActive ? "nav__pill--active" : ""}`
           }
+          onClick={closeMenu}
         >
           Browse Bikes
         </NavLink>
@@ -31,6 +63,7 @@ export default function Navigation() {
             className={({ isActive }) =>
               `nav__pill ${isActive ? "nav__pill--active" : ""}`
             }
+            onClick={closeMenu}
           >
             My Bookings
           </NavLink>
@@ -43,7 +76,10 @@ export default function Navigation() {
             <button
               type="button"
               className="nav__pill nav__pill--logout"
-              onClick={logout}
+              onClick={() => {
+                logout();
+                closeMenu();
+              }}
             >
               Logout
             </button>
@@ -55,6 +91,7 @@ export default function Navigation() {
               className={({ isActive }) =>
                 `nav__pill nav__pill--login ${isActive ? "nav__pill--active" : ""}`
               }
+              onClick={closeMenu}
             >
               Login
             </NavLink>
