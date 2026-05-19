@@ -1,5 +1,5 @@
-import BikeCard from "./BikeCard";
-import TypeFilter from "./TypeFilter";
+import BikeCard from "../components/BikeCard";
+import TypeFilter from "../components/TypeFilter";
 import { getBikes } from "../api/bikes";
 import type { BikeListItem } from "../api/types";
 import { useState } from "react";
