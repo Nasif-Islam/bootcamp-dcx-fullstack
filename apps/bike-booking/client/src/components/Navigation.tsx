@@ -71,9 +71,12 @@ export default function Navigation() {
 
         {isAuthenticated ? (
           <>
-            <span className="nav__hello">Hi, {user!.name}</span>
+            <span id="user" className="nav__hello">
+              Hi, {user!.name}
+            </span>
 
-            <button
+            <NavLink
+              to="/"
               type="button"
               className="nav__pill nav__pill--logout"
               onClick={() => {
@@ -82,7 +85,7 @@ export default function Navigation() {
               }}
             >
               Logout
-            </button>
+            </NavLink>
           </>
         ) : (
           <>

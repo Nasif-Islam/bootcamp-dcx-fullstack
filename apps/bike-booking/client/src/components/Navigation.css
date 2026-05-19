@@ -80,7 +80,9 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
-.nav__pill {
+
+.nav__pill,
+#user {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -100,9 +102,13 @@
     filter 140ms ease,
     transform 80ms ease;
 
-  background: var(--purple2);
   color: var(--white);
 }
+
+.nav__pill {
+  background: var(--purple2);
+}
+
 
 .nav__pill:hover {
   filter: brightness(1.05);
@@ -185,7 +191,6 @@
   .nav__hello {
     order: -1;
     width: 100%;
-    display: block;
     margin: 0;
     text-align: center;
   }
