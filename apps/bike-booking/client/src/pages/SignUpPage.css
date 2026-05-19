@@ -126,7 +126,7 @@
 .button-primary {
   width: 100%;
   color: var(--white);
-  background: linear-gradient(90deg, var(--blue) 0%, var(--dark-lilac) 100%);
+  background: linear-gradient(90deg, var(--dark-blue) 0%, var(--purple) 100%);
   box-shadow: 0 8px 16px rgba(91, 110, 225, 0.25);
   transition:
     filter 160ms ease,
@@ -155,7 +155,7 @@
 }
 
 .link {
-  color: var(--blue);
+  color: var(--indigo);
   font-weight: 700;
   text-decoration: none;
 }
