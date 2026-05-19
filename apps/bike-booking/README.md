@@ -153,10 +153,10 @@ To set up the MongoDB database for the Bike Booking application, follow these st
      ```
 
 4. **Verify Connection**:
-   - Ensure the `MONGO_URI` in the `.env` file matches your MongoDB instance:
+   - Ensure the `MONGODB_URI` in the `.env` file matches your MongoDB instance:
 
      ```env
-     MONGO_URI=mongodb://127.0.0.1:27017/bike-booking
+     MONGODB_URI=mongodb://127.0.0.1:27017/bike-booking
      ```
 
    - Update the URI if your MongoDB instance is hosted remotely or uses authentication.
@@ -167,5 +167,3 @@ To set up the MongoDB database for the Bike Booking application, follow these st
      ```bash
      npm run seed
      ```
-
-For any issues, please contact the project maintainers.
