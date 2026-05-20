@@ -149,6 +149,17 @@ describe("BikeList filtering", () => {
       </MemoryRouter>,
     );
 
+  it("filters bikes by type: all", () => {
+    renderComponent();
+
+    fireEvent.click(screen.getByRole("button", { name: /all/i }));
+
+    expect(screen.getByText("TrailBlazer X1")).toBeInTheDocument();
+    expect(screen.getByText("RoadRunner Pro")).toBeInTheDocument();
+    expect(screen.getByText("City Cruiser")).toBeInTheDocument();
+    expect(screen.getByText("Volt E-Bike")).toBeInTheDocument();
+  });
+  
   it("filters bikes by type: mountain", () => {
     renderComponent();
 
