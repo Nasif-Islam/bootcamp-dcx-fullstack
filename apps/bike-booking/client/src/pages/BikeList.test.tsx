@@ -257,7 +257,7 @@ describe("Loading and error state", () => {
   it("displays an error message when the API call fails", () => {
     (asyncHook.useAsync as any).mockReturnValue({
       data: null,
-      loading: true || false,
+      loading: false,
       error: "Failed to fetch bikes",
     });
 
