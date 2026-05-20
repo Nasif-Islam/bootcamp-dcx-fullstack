@@ -8,74 +8,74 @@ Build the React UI and connect it to the backend API. Create a responsive design
 
 ### 1. Types & API Client
 
-- [ ] Create TypeScript types matching backend
-- [ ] Create API client functions (fetch wrappers)
-- [ ] Add error handling for API calls
+- [x] Create TypeScript types matching backend
+- [x] Create API client functions (fetch wrappers)
+- [x] Add error handling for API calls
 
 ### 2. Authentication UI (Feature 2.6)
 
-- [ ] Create Login page/component
-- [ ] Create Registration page/component
-- [ ] Store user session (localStorage or state)
-- [ ] Add logout functionality
-- [ ] Protect routes requiring authentication
+- [x] Create Login page/component
+- [x] Create Registration page/component
+- [x] Store user session (localStorage or state)
+- [x] Add logout functionality
+- [x] Protect routes requiring authentication
 
 ### 3. Bike Listing Page (Feature 2.1)
 
-- [ ] Create BikeList component
-- [ ] Create BikeCard component with:
-  - [ ] Bike image
-  - [ ] Name and type
-  - [ ] Price per hour
-  - [ ] Availability status badge
-- [ ] Add type filter (All, Mountain, Road, City, Electric)
-- [ ] Add loading and error states
+- [x] Create BikeList component
+- [x] Create BikeCard component with:
+  - [x] Bike image
+  - [x] Name and type
+  - [x] Price per hour
+  - [x] Availability status badge
+- [x] Add type filter (All, Mountain, Road, City, Electric)
+- [x] Add loading and error states
 
 ### 4. Booking Flow (Features 2.2, 2.3)
 
-- [ ] Create BookingForm component with:
-  - [ ] Start date picker
-  - [ ] Start time picker
-  - [ ] End date picker
-  - [ ] End time picker
-- [ ] Add "Check Availability" button
-- [ ] Show availability status before booking
-- [ ] Calculate and display estimated price
-- [ ] Create "Confirm Booking" action
-- [ ] Create BookingSuccess confirmation component
+- [x] Create BookingForm component with:
+  - [x] Start date picker
+  - [x] Start time picker
+  - [x] End date picker
+  - [x] End time picker
+- [x] Add "Check Availability" button
+- [x] Show availability status before booking
+- [x] Calculate and display estimated price
+- [x] Create "Confirm Booking" action
+- [x] Create BookingSuccess confirmation component
 
 ### 5. My Bookings Page (Features 2.4, 2.5)
 
-- [ ] Create MyBookings component
-- [ ] Display upcoming bookings section
-- [ ] Display past/cancelled bookings section
-- [ ] Show booking details:
-  - [ ] Bike name and type
-  - [ ] Start/end date and time
-  - [ ] Status (confirmed/cancelled)
-- [ ] Add "Cancel Booking" button for upcoming bookings
-- [ ] Show cancellation confirmation
+- [x] Create MyBookings component
+- [x] Display upcoming bookings section
+- [x] Display past/cancelled bookings section
+- [x] Show booking details:
+  - [x] Bike name and type
+  - [x] Start/end date and time
+  - [x] Status (confirmed/cancelled)
+- [x] Add "Cancel Booking" button for upcoming bookings
+- [x] Show cancellation confirmation
 
 ### 6. Navigation & Layout
 
-- [ ] Create app header with logo
-- [ ] Add navigation: Browse Bikes | My Bookings | Login/Logout
-- [ ] Create responsive layout (mobile-first)
-- [ ] Add footer
+- [x] Create app header with logo
+- [x] Add navigation: Browse Bikes | My Bookings | Login/Logout
+- [x] Create responsive layout (mobile-first)
+- [x] Add footer
 
 ### 7. Styling & Polish
 
-- [ ] Apply consistent color scheme
-- [ ] Add hover effects and transitions
-- [ ] Ensure responsive design (320px - 1920px)
+- [x] Apply consistent color scheme
+- [x] Add hover effects and transitions
+- [x] Ensure responsive design (320px - 1920px)
 - [ ] Add loading spinners
 - [ ] Add toast notifications for actions
 
 ### 8. Testing
 
-- [ ] Write component tests (6+ test cases)
-- [ ] Test user flows end-to-end
-- [ ] Test responsive breakpoints
+- [x] Write component tests (6+ test cases)
+- [x] Test user flows end-to-end
+- [x] Test responsive breakpoints
 
 ## Component Structure
 

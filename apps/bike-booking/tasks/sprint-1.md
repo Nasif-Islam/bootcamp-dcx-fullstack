@@ -14,23 +14,23 @@ Build the core backend API for bikes, bookings, and user authentication.
 
 ### 2. Bikes API (Feature 2.1: View Available Bikes)
 
-- [ ] GET /api/bikes - List all bikes with availability status
-- [ ] GET /api/bikes/:id - Get single bike details
-- [ ] GET /api/bikes/:id/availability - Check availability for time range
-- [ ] Add filtering by bike type (mountain, road, city, electric)
+- [x] GET /api/bikes - List all bikes with availability status
+- [x] GET /api/bikes/:id - Get single bike details
+- [x] GET /api/bikes/:id/availability - Check availability for time range
+- [x] Add filtering by bike type (mountain, road, city, electric)
 
 ### 3. Bookings API (Features 2.2, 2.3, 2.4, 2.5)
 
-- [ ] POST /api/bookings - Create a booking
-  - [ ] Validate start/end date/time
-  - [ ] Check for double booking conflicts
-  - [ ] Return confirmation with booking details
-- [ ] GET /api/bookings - List user's bookings
-  - [ ] Filter by userId query param
-  - [ ] Include bike details in response
-- [ ] DELETE /api/bookings/:id - Cancel a booking
-  - [ ] Update status to 'cancelled'
-  - [ ] Make time slot available again
+- [x] POST /api/bookings - Create a booking
+  - [x] Validate start/end date/time
+  - [x] Check for double booking conflicts
+  - [x] Return confirmation with booking details
+- [x] GET /api/bookings - List user's bookings
+  - [x] Filter by userId query param
+  - [x] Include bike details in response
+- [x] DELETE /api/bookings/:id - Cancel a booking
+  - [x] Update status to 'cancelled'
+  - [x] Make time slot available again
 
 ### 4. Users API (Feature 2.6: Simple Registration/Login)
 
