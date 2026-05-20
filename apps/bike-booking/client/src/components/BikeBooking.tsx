@@ -7,15 +7,10 @@ import type { Booking, Bike } from "../api/types";
 
 interface BookingFormProps {
   bike: Bike;
-  userId: string;
   bookingHandler: (booking: Booking) => void;
 }
 
-export function BikeBooking({
-  bike,
-  userId,
-  bookingHandler,
-}: BookingFormProps) {
+export function BikeBooking({ bike, bookingHandler }: BookingFormProps) {
   const navigate = useNavigate();
   // minimal format for todays date
   const today = new Date().toISOString().split("T")[0];
@@ -83,7 +78,6 @@ export function BikeBooking({
     try {
       const booking = await createBooking({
         bikeId: bike._id,
-        userId,
         startTime: start,
         endTime: end,
       });

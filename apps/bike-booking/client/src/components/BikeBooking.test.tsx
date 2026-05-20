@@ -242,7 +242,6 @@ describe("BikeBooking", () => {
 
     expect(mockedCreateBooking).toHaveBeenCalledWith({
       bikeId: bike._id,
-      userId,
       startTime: expect.any(String),
       endTime: expect.any(String),
     });
