@@ -61,17 +61,13 @@ function makeBooking(overrides: Partial<Booking> = {}): Booking {
 
 function renderComponent({
   bike = makeBike(),
-  userId = "user1",
   bookingHandler = vi.fn(),
 }: {
   bike?: Bike;
-  userId?: string;
   bookingHandler?: (b: Booking) => void;
 } = {}) {
-  render(
-    <BikeBooking bike={bike} userId={userId} bookingHandler={bookingHandler} />,
-  );
-  return { bike, userId, bookingHandler };
+  render(<BikeBooking bike={bike} bookingHandler={bookingHandler} />);
+  return { bike, bookingHandler };
 }
 
 function setDateTime({
@@ -206,14 +202,14 @@ describe("BikeBooking", () => {
 
   it("submits booking when available: calls createBooking and bookingHandler", async () => {
     const bookingHandler = vi.fn();
-    const { bike, userId } = renderComponent({ bookingHandler });
+    const { bike } = renderComponent({ bookingHandler });
 
     mockedGetBikeAvailability.mockResolvedValueOnce({
       available: true,
       conflicts: [],
     });
 
-    const returnedBooking = makeBooking({ bikeId: bike, userId });
+    const returnedBooking = makeBooking({ bikeId: bike });
     mockedCreateBooking.mockResolvedValueOnce(returnedBooking);
 
     const date = tomorrowISODate();
