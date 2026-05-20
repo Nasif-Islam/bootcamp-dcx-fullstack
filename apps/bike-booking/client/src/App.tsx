@@ -4,7 +4,7 @@ import Footer from "./components/Footer";
 import BikeList from "./pages/BikeList";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import MyBookings from "./components/MyBookings";
+import MyBookings from "./pages/MyBookings";
 import BookingPage from "./pages/BookingPage";
 import BookingConfirmationPage from "./pages/BookingConfirmationPage";
 
