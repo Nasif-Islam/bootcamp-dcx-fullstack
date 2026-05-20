@@ -1,16 +1,17 @@
 /**
  * @vitest-environment jsdom
  */
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BikeList from "../pages/BikeList";
 import BikeCard from "../components/BikeCard";
+import * as asyncHook from "../hooks/useAsync";
 import "@testing-library/jest-dom/vitest";
 
 // cleanup to prevent multiple renders stacking
 afterEach(() => {
-  cleanup(); 
+  cleanup();
 });
 
 // mock useUser
@@ -34,6 +35,8 @@ vi.mock("../hooks/useAsync", () => ({
   }),
 }));
 
+vi.spyOn(asyncHook, "useAsync");
+
 describe("BikeCard rendering", () => {
   const baseProps = {
     bikeId: "B001",
@@ -49,8 +52,9 @@ describe("BikeCard rendering", () => {
   const renderComponent = (props = {}) =>
     render(
       // provides React Router context
-      <MemoryRouter> 
-        <BikeCard {...baseProps} {...props} /> {/*the ...props overrides whatever is in the baseProps*/}
+      <MemoryRouter>
+        <BikeCard {...baseProps} {...props} />{" "}
+        {/*the ...props overrides whatever is in the baseProps*/}
       </MemoryRouter>,
     );
 
@@ -72,7 +76,7 @@ describe("BikeCard rendering", () => {
 
   // Test the available state
   it("shows available state correctly (Book Now)", () => {
-    renderComponent({ isAvailable: true }); 
+    renderComponent({ isAvailable: true });
 
     expect(screen.getByText("Available")).toBeInTheDocument();
     expect(screen.getByText("Book Now")).toBeInTheDocument();
@@ -140,14 +144,34 @@ const mockBikes = [
   },
 ];
 
+const renderComponent = () =>
+  render(
+    // provides React Router context
+    <MemoryRouter>
+      <BikeList />
+    </MemoryRouter>,
+  );
+
 describe("BikeList filtering", () => {
-  const renderComponent = () =>
-    render(
-      // provides React Router context
-      <MemoryRouter>
-        <BikeList />
-      </MemoryRouter>,
-    );
+  beforeEach(() => {
+    // runs before each test in the 'it' block
+    (asyncHook.useAsync as any).mockReturnValue({
+      // this replaces the useAsync(getBikes)
+      data: mockBikes,
+      loading: false,
+      error: null,
+    });
+    /*
+      This: 
+      const { data: bikes, loading, error } = useAsync(getBikes);
+
+      Becomes these:
+      const bikes = mockBikes;
+      const loading = false;
+      const error = null;
+
+    */
+  });
 
   it("filters bikes by type: all", () => {
     renderComponent();
@@ -159,7 +183,7 @@ describe("BikeList filtering", () => {
     expect(screen.getByText("City Cruiser")).toBeInTheDocument();
     expect(screen.getByText("Volt E-Bike")).toBeInTheDocument();
   });
-  
+
   it("filters bikes by type: mountain", () => {
     renderComponent();
 
@@ -202,5 +226,45 @@ describe("BikeList filtering", () => {
     expect(screen.queryByText("TrailBlazer X1")).not.toBeInTheDocument();
     expect(screen.queryByText("RoadRunner Pro")).not.toBeInTheDocument();
     expect(screen.queryByText("City Cruiser")).not.toBeInTheDocument();
+  });
+});
+
+describe("Loading and error state", () => {
+  it("shows loading skeletons when loading is true", () => {
+    (asyncHook.useAsync as any).mockReturnValue({
+      data: null,
+      loading: true,
+      error: null,
+    });
+
+    renderComponent();
+
+    const skeletons = document.querySelectorAll(".skeleton-card");
+    expect(skeletons.length).toBe(6);
+  });
+
+  it("does NOT show loading skeletons when loading is false", () => {
+    (asyncHook.useAsync as any).mockReturnValue({
+      data: mockBikes,
+      loading: false,
+      error: null,
+    });
+
+    renderComponent();
+    expect(document.querySelector(".skeleton-card")).toBeNull();
+  });
+
+  it("displays an error message when the API call fails", () => {
+    (asyncHook.useAsync as any).mockReturnValue({
+      data: null,
+      loading: true || false,
+      error: "Failed to fetch bikes",
+    });
+
+    renderComponent();
+
+    expect(
+      screen.getByText("Error: Failed to fetch bikes"),
+    ).toBeInTheDocument();
   });
 });
